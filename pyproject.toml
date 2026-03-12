@@ -1,0 +1,109 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ag3ntwerk"
+version = "0.1.0"
+description = "ag3ntwerk: Hierarchical AI Agent Orchestration Platform"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "AGPL-3.0-or-later"
+authors = [
+    {name = "ag3ntwerk Team"},
+    {name = "GozerAI"}
+]
+keywords = ["ai", "agents", "llm", "ollama", "gpt4all", "orchestration", "hierarchical"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+    "aiohttp>=3.13.3",
+    "pyyaml>=6.0,<6.1",
+    "pydantic>=2.0,<2.11",
+    "click>=8.0,<8.2",
+    "fastapi>=0.109.0,<0.116",
+    "uvicorn[standard]>=0.27.0,<0.35",
+    "httpx>=0.26.0,<0.29",
+    "PyJWT[crypto]>=2.8.0,<2.11",
+    "slowapi>=0.1.9,<0.2",
+    "alembic>=1.13.0,<1.15",
+    "cryptography>=46.0.5,<48",
+    "python-dotenv>=1.0.0,<1.1",
+]
+
+[project.optional-dependencies]
+distributed = [
+    "redis>=5.0.0,<6",
+    "asyncpg>=0.29.0,<1",
+]
+dev = [
+    "pytest>=7.0,<9",
+    "pytest-asyncio>=0.23.0,<1",
+    "pytest-cov>=4.0,<6",
+    "black>=23.0,<25",
+    "ruff>=0.1.0,<1",
+    "mypy>=1.0,<2",
+]
+all = [
+    "ag3ntwerk[distributed,dev]",
+]
+
+[project.urls]
+Homepage = "https://github.com/GozerAI/ag3ntwerk"
+Documentation = "https://github.com/GozerAI/ag3ntwerk#readme"
+Repository = "https://github.com/GozerAI/ag3ntwerk"
+
+[project.scripts]
+ag3ntwerk = "ag3ntwerk.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ag3ntwerk"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/config",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+testpaths = ["tests"]
+pythonpath = ["src"]
+python_files = "test_*.py"
+python_functions = "test_*"
+markers = [
+    "integration: marks tests as integration tests (requires running LLM servers)",
+    "load: marks tests as load tests (require running server)",
+    "benchmark: marks tests as performance benchmarks",
+    "stress: marks tests as stress tests",
+    "slow: marks tests as slow running",
+    "redis: marks tests that require Redis (skip with '-m \"not redis\"')",
+    "e2e: marks tests as end-to-end tests (require full infrastructure)",
+]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311", "py312"]
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+ignore_missing_imports = true

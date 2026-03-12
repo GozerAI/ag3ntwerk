@@ -1,0 +1,265 @@
+# ag3ntwerk Development Docker Compose
+# ====================================
+# Federated service architecture:
+# - ag3ntwerk-core: Overwatch (Overwatch) coordination layer
+# - nexus: External Nexus strategic intelligence service
+# - forge: External Forge development service
+# - sentinel: External Sentinel/Citadel security service
+#
+# Usage: docker-compose up -d
+# With external services: docker-compose --profile federated up -d
+
+services:
+  # ==========================================================================
+  # ag3ntwerk Core API Service (Overwatch/Overwatch Coordination Layer)
+  # ==========================================================================
+  ag3ntwerk:
+    build:
+      context: .
+      target: development
+    container_name: ag3ntwerk-api
+    ports:
+      - "3737:3737"
+    environment:
+      - AGENTWERK_ENV=development
+      - AGENTWERK_HOST=0.0.0.0
+      - AGENTWERK_PORT=3737
+      - DATABASE_BACKEND=postgresql
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_DATABASE=ag3ntwerk
+      - PG_USER=ag3ntwerk
+      - PG_PASSWORD=${PG_PASSWORD:-csuite_dev_password}
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-csuite_dev_redis}@redis:6379
+      - OLLAMA_HOST=http://ollama:11434
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - AGENTWERK_USE_MIGRATIONS=true
+      # Revenue Stack — Social Integrations (optional in dev)
+      - LINKEDIN_ACCESS_TOKEN=${LINKEDIN_ACCESS_TOKEN:-}
+      - LINKEDIN_PERSON_URN=${LINKEDIN_PERSON_URN:-}
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN:-}
+      - TWITTER_API_KEY=${TWITTER_API_KEY:-}
+      - TWITTER_API_SECRET=${TWITTER_API_SECRET:-}
+      - TWITTER_ACCESS_TOKEN=${TWITTER_ACCESS_TOKEN:-}
+      - TWITTER_ACCESS_SECRET=${TWITTER_ACCESS_SECRET:-}
+      # Revenue Stack — Payment Integrations (optional in dev)
+      - GUMROAD_ACCESS_TOKEN=${GUMROAD_ACCESS_TOKEN:-}
+      # Revenue Stack — Voice
+      - WHISPER_BACKEND=${WHISPER_BACKEND:-auto}
+      # Service bridge configuration
+      - NEXUS_ENABLED=true
+      - NEXUS_CHANNEL_PREFIX=ag3ntwerk:nexus
+      - FORGE_ENABLED=true
+      - FORGE_CHANNEL_PREFIX=ag3ntwerk:forge
+      - SENTINEL_ENABLED=true
+      - SENTINEL_CHANNEL_PREFIX=ag3ntwerk:sentinel
+    volumes:
+      - ./src:/app/src:ro
+      - ./config:/app/config:ro
+      - ag3ntwerk-data:/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3737/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+
+  # ==========================================================================
+  # Nexus - External Nexus Strategic Intelligence Service
+  # ==========================================================================
+  nexus:
+    build:
+      context: .
+      dockerfile: src/nexus/Dockerfile
+      target: development
+    container_name: ag3ntwerk-nexus
+    environment:
+      - AGENTWERK_SERVICE=nexus
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-csuite_dev_redis}@redis:6379
+      - OLLAMA_HOST=http://ollama:11434
+      - CHANNEL_PREFIX=ag3ntwerk:nexus
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+    profiles:
+      - federated
+
+  # ==========================================================================
+  # Forge - External Forge Development Service
+  # ==========================================================================
+  forge:
+    build:
+      context: .
+      dockerfile: src/forge/Dockerfile
+      target: development
+    container_name: ag3ntwerk-forge
+    environment:
+      - AGENTWERK_SERVICE=forge
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-csuite_dev_redis}@redis:6379
+      - OLLAMA_HOST=http://ollama:11434
+      - CHANNEL_PREFIX=ag3ntwerk:forge
+    # Docker socket mount removed for security (grants full host root access).
+    # For container operations, use Docker-in-Docker sidecar or rootless Docker.
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+    profiles:
+      - federated
+
+  # ==========================================================================
+  # Sentinel - External Sentinel/Citadel Security Service
+  # ==========================================================================
+  sentinel:
+    build:
+      context: .
+      dockerfile: src/sentinel/Dockerfile
+      target: development
+    container_name: ag3ntwerk-sentinel
+    environment:
+      - AGENTWERK_SERVICE=sentinel
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-csuite_dev_redis}@redis:6379
+      - OLLAMA_HOST=http://ollama:11434
+      - CHANNEL_PREFIX=ag3ntwerk:sentinel
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+    profiles:
+      - federated
+
+  # ==========================================================================
+  # PostgreSQL Database
+  # ==========================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: ag3ntwerk-postgres
+    environment:
+      - POSTGRES_DB=ag3ntwerk
+      - POSTGRES_USER=ag3ntwerk
+      - POSTGRES_PASSWORD=${PG_PASSWORD:-csuite_dev_password}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ag3ntwerk -d ag3ntwerk"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+
+  # ==========================================================================
+  # Redis for Distributed Communication
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: ag3ntwerk-redis
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-csuite_dev_redis}
+    volumes:
+      - redis-data:/data
+    ports:
+      - "127.0.0.1:6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-csuite_dev_redis}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+
+  # ==========================================================================
+  # Ollama for Local LLM (Optional)
+  # ==========================================================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ag3ntwerk-ollama
+    volumes:
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+    profiles:
+      - llm  # Only start with: docker-compose --profile llm up
+
+  # ==========================================================================
+  # Prometheus Metrics
+  # ==========================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ag3ntwerk-prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./deploy/monitoring/prometheus:/etc/prometheus:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+    profiles:
+      - monitoring
+
+  # ==========================================================================
+  # Grafana Dashboards
+  # ==========================================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ag3ntwerk-grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./deploy/monitoring/grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    networks:
+      - ag3ntwerk-network
+    profiles:
+      - monitoring
+
+# ==========================================================================
+# Volumes
+# ==========================================================================
+volumes:
+  ag3ntwerk-data:
+  postgres-data:
+  redis-data:
+  ollama-data:
+  prometheus-data:
+  grafana-data:
+
+# ==========================================================================
+# Networks
+# ==========================================================================
+networks:
+  ag3ntwerk-network:
+    driver: bridge

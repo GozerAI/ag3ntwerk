@@ -1,0 +1,167 @@
+groups:
+  - name: ag3ntwerk-availability
+    rules:
+      - alert: CSuiteDown
+        expr: up{job="ag3ntwerk"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ag3ntwerk instance is down"
+          description: "ag3ntwerk instance {{ $labels.instance }} has been down for more than 1 minute."
+
+      - alert: CSuiteHighErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="ag3ntwerk",status=~"5.."}[5m]))
+          / sum(rate(http_requests_total{job="ag3ntwerk"}[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ag3ntwerk high error rate"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 1%)"
+
+      - alert: CSuiteHighErrorRateWarning
+        expr: |
+          sum(rate(http_requests_total{job="ag3ntwerk",status=~"5.."}[5m]))
+          / sum(rate(http_requests_total{job="ag3ntwerk"}[5m])) > 0.005
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk elevated error rate"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 0.5%)"
+
+  - name: ag3ntwerk-latency
+    rules:
+      - alert: CSuiteHighLatency
+        expr: |
+          histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job="ag3ntwerk"}[5m])) by (le))
+          > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk high latency"
+          description: "p99 latency is {{ $value | humanizeDuration }} (threshold: 2s)"
+
+      - alert: CSuiteHealthCheckSlow
+        expr: |
+          histogram_quantile(0.95, sum(rate(http_request_duration_seconds_bucket{job="ag3ntwerk",path="/health"}[5m])) by (le))
+          > 0.5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk health check is slow"
+          description: "Health check p95 latency is {{ $value | humanizeDuration }} (threshold: 500ms)"
+
+  - name: ag3ntwerk-resources
+    rules:
+      - alert: CSuiteHighCPU
+        expr: |
+          sum(rate(container_cpu_usage_seconds_total{container="ag3ntwerk"}[5m])) by (pod)
+          / sum(container_spec_cpu_quota{container="ag3ntwerk"}/container_spec_cpu_period{container="ag3ntwerk"}) by (pod)
+          > 0.9
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk high CPU usage"
+          description: "Pod {{ $labels.pod }} CPU usage is {{ $value | humanizePercentage }}"
+
+      - alert: CSuiteHighMemory
+        expr: |
+          container_memory_usage_bytes{container="ag3ntwerk"}
+          / container_spec_memory_limit_bytes{container="ag3ntwerk"}
+          > 0.9
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk high memory usage"
+          description: "Pod {{ $labels.pod }} memory usage is {{ $value | humanizePercentage }}"
+
+      - alert: CSuiteOOMKillRisk
+        expr: |
+          container_memory_usage_bytes{container="ag3ntwerk"}
+          / container_spec_memory_limit_bytes{container="ag3ntwerk"}
+          > 0.95
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ag3ntwerk at risk of OOM kill"
+          description: "Pod {{ $labels.pod }} memory usage is {{ $value | humanizePercentage }}, OOM kill imminent"
+
+  - name: ag3ntwerk-database
+    rules:
+      - alert: CSuiteDatabaseConnectionFailure
+        expr: csuite_database_connection_errors_total > 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "ag3ntwerk database connection failures"
+          description: "Database connection errors detected"
+
+      - alert: CSuiteDatabasePoolExhausted
+        expr: |
+          csuite_database_pool_size - csuite_database_pool_available < 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk database pool nearly exhausted"
+          description: "Only {{ $value }} connections available in pool"
+
+  - name: ag3ntwerk-agent
+    rules:
+      - alert: CSuiteHighTaskFailureRate
+        expr: |
+          sum(rate(csuite_task_failures_total[5m]))
+          / sum(rate(csuite_tasks_total[5m]))
+          > 0.05
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk high task failure rate"
+          description: "Task failure rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      - alert: CSuiteTaskQueueBacklog
+        expr: csuite_task_queue_depth > 100
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk task queue backlog"
+          description: "{{ $value }} tasks pending in queue"
+
+  - name: ag3ntwerk-slo
+    rules:
+      - alert: CSuiteSLOBudgetBurn
+        expr: |
+          1 - (
+            sum(rate(http_requests_total{job="ag3ntwerk",status!~"5.."}[1h]))
+            / sum(rate(http_requests_total{job="ag3ntwerk"}[1h]))
+          ) > 0.001 * 24  # Burning 24x budget
+        for: 1h
+        labels:
+          severity: critical
+        annotations:
+          summary: "ag3ntwerk SLO budget burning fast"
+          description: "Error budget is being consumed at {{ $value | humanize }}x the sustainable rate"
+
+      - alert: CSuiteMonthlyBudgetLow
+        expr: |
+          1 - (
+            sum(increase(http_requests_total{job="ag3ntwerk",status!~"5.."}[30d]))
+            / sum(increase(http_requests_total{job="ag3ntwerk"}[30d]))
+          ) > 0.00075  # 75% of 0.1% monthly budget
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "ag3ntwerk monthly error budget low"
+          description: "Monthly error budget is {{ $value | humanizePercentage }} consumed (threshold: 75%)"

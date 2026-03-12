@@ -1,0 +1,145 @@
+# ag3ntwerk Helm Chart Values
+
+# Number of replicas
+replicaCount: 2
+
+image:
+  repository: ag3ntwerk
+  tag: "0.1.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations:
+  prometheus.io/scrape: "true"
+  prometheus.io/port: "3737"
+  prometheus.io/path: "/metrics"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop:
+      - ALL
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3737
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: ag3ntwerk.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+pdb:
+  enabled: true
+  minAvailable: 1
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchLabels:
+              app.kubernetes.io/name: ag3ntwerk
+          topologyKey: kubernetes.io/hostname
+
+# Application configuration
+config:
+  environment: production
+  logLevel: INFO
+  logFormat: json
+
+  # Database
+  database:
+    backend: postgresql
+    host: ""  # Required: set via --set or values file
+    port: 5432
+    name: ag3ntwerk
+    poolSize: 10
+    maxOverflow: 20
+
+  # Migrations
+  useMigrations: true
+
+# Secrets configuration
+secrets:
+  # Set to true to create secrets from values
+  create: false
+
+  # Database credentials
+  database:
+    user: ag3ntwerk
+    password: ""  # Required: set via --set-string
+
+  # Encryption key for secrets file
+  encryptionKey: ""  # Required: set via --set-string
+
+  # LLM Provider API Keys (optional)
+  llm:
+    openaiApiKey: ""
+    anthropicApiKey: ""
+
+# External secrets (alternative to inline secrets)
+externalSecrets:
+  enabled: false
+  # Name of existing secret
+  secretName: ""
+
+# Probes configuration
+probes:
+  liveness:
+    initialDelaySeconds: 30
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readiness:
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+  startup:
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 5
+    failureThreshold: 30

@@ -1,0 +1,29 @@
+# C-Suite Caddy Reverse Proxy Configuration
+# ===========================================
+# Replace csuite.example.com with your actual domain.
+# Caddy will automatically obtain and renew Let's Encrypt TLS certificates.
+
+csuite.example.com {
+    # Reverse proxy to C-Suite API
+    reverse_proxy csuite:3737
+
+    # WebSocket support for relay tunnels and real-time updates
+    # Caddy handles WebSocket upgrade automatically
+
+    # Security headers
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        -Server
+    }
+
+    # Logging
+    log {
+        output file /data/access.log {
+            roll_size 50mb
+            roll_keep 5
+        }
+    }
+}

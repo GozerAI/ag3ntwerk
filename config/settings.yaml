@@ -1,0 +1,245 @@
+# ag3ntwerk Configuration
+# =====================
+# Configuration file for the ag3ntwerk AI Agent Platform
+
+# LLM Provider Settings
+llm:
+  # Provider to use:
+  # Local: "ollama" (recommended), "gpt4all"
+  # Cloud: "openai", "anthropic", "google", "openrouter", "huggingface", "github", "perplexity"
+  provider: ollama
+
+  # =============================================================================
+  # Local Providers
+  # =============================================================================
+
+  # Ollama configuration (recommended - local inference)
+  # Install: https://ollama.ai
+  # Start server: ollama serve
+  # Pull models: ollama pull llama3.2
+  ollama:
+    base_url: "http://localhost:11434"
+    default_model: null  # Auto-select if null
+    timeout: 300.0  # Longer timeout for local inference
+
+  # GPT4All configuration (alternative local inference)
+  # Requires GPT4All Desktop with API server enabled
+  gpt4all:
+    base_url: "http://localhost:4891/v1"
+    default_model: null
+    timeout: 120.0
+
+  # =============================================================================
+  # Cloud Providers (set API keys in environment variables)
+  # =============================================================================
+
+  # OpenAI - GPT-4o, GPT-4, GPT-3.5
+  # Set: OPENAI_API_KEY
+  openai:
+    # api_key: null  # Or set OPENAI_API_KEY env var
+    default_model: "gpt-4o-mini"
+    timeout: 60.0
+
+  # Anthropic - Claude 3.5 Sonnet, Claude 3 Opus/Haiku
+  # Set: ANTHROPIC_API_KEY
+  anthropic:
+    # api_key: null  # Or set ANTHROPIC_API_KEY env var
+    default_model: "claude-3-5-sonnet-latest"
+    timeout: 120.0
+
+  # Google - Gemini 2.0, Gemini 1.5 Pro/Flash
+  # Set: GOOGLE_API_KEY
+  google:
+    # api_key: null  # Or set GOOGLE_API_KEY env var
+    default_model: "gemini-1.5-flash"
+    timeout: 120.0
+
+  # OpenRouter - Unified access to 100+ models
+  # Set: OPENROUTER_API_KEY
+  openrouter:
+    # api_key: null  # Or set OPENROUTER_API_KEY env var
+    default_model: "openai/gpt-4o-mini"
+    timeout: 120.0
+
+  # HuggingFace - Open-source models
+  # Set: HUGGINGFACE_API_KEY or HF_TOKEN
+  huggingface:
+    # api_key: null  # Or set HUGGINGFACE_API_KEY env var
+    default_model: "meta-llama/Llama-3.1-8B-Instruct"
+    timeout: 120.0
+
+  # GitHub Models - Azure-hosted models
+  # Set: GITHUB_TOKEN
+  github:
+    # api_key: null  # Or set GITHUB_TOKEN env var
+    default_model: "gpt-4o-mini"
+    timeout: 120.0
+
+  # Perplexity - AI with real-time web search
+  # Set: PERPLEXITY_API_KEY
+  perplexity:
+    # api_key: null  # Or set PERPLEXITY_API_KEY env var
+    default_model: "sonar"
+    timeout: 120.0
+
+# Agent Settings
+# Each agent can be enabled/disabled and configured individually
+agents:
+  overwatch:
+    enabled: true
+    name: "Overwatch"
+    domain: "Coordination & Routing"
+    description: "Internal coordination and workflow management"
+
+  nexus:
+    enabled: true
+    name: "Nexus"
+    domain: "Strategic Ops"
+    description: "Strategic intelligence (deprecated alias for Overwatch)"
+
+  forge:
+    enabled: true
+    name: "Forge"
+    domain: "Technology & Architecture"
+    description: "Development and technical strategy"
+
+  keystone:
+    enabled: false
+    name: "Keystone"
+    domain: "Finance & Resources"
+    description: "Financial analysis and reporting"
+
+  echo:
+    enabled: true
+    name: "Echo"
+    domain: "Marketing & Growth"
+    description: "Marketing strategy and growth campaigns"
+
+  sentinel:
+    enabled: true
+    name: "Sentinel"
+    domain: "Information Governance"
+    description: "Security operations and threat management"
+
+  blueprint:
+    enabled: true
+    name: "Blueprint"
+    domain: "Product Direction"
+    description: "Product strategy and roadmap"
+
+  axiom:
+    enabled: false
+    name: "Axiom"
+    domain: "Research & Investigation"
+    description: "Research and deep analysis"
+
+  index:
+    enabled: true
+    name: "Index"
+    domain: "Data Governance"
+    description: "Data governance and knowledge management"
+
+  foundry:
+    enabled: true
+    name: "Foundry"
+    domain: "Engineering Delivery"
+    description: "Engineering execution and delivery"
+
+  citadel:
+    enabled: true
+    name: "Citadel"
+    domain: "Security Operations"
+    description: "Security operations and vulnerability management"
+
+  beacon:
+    enabled: true
+    name: "Beacon"
+    domain: "Customer Relations"
+    description: "Customer experience and support"
+
+  vector:
+    enabled: false
+    name: "Vector"
+    domain: "Revenue Operations"
+    description: "Revenue optimization and sales enablement"
+
+  aegis:
+    enabled: false
+    name: "Aegis"
+    domain: "Risk Management"
+    description: "Risk assessment and mitigation"
+
+  accord:
+    enabled: false
+    name: "Accord"
+    domain: "Compliance"
+    description: "Compliance monitoring and governance"
+
+  compass:
+    enabled: false
+    name: "Compass"
+    domain: "Strategy"
+    description: "Strategic planning and analysis"
+
+# External Service Bridges
+# Configure connections to external peer services
+services:
+  nexus:
+    enabled: true
+    redis_url: ${REDIS_URL:-redis://localhost:6379}
+    channel_prefix: ag3ntwerk:nexus
+    timeout_seconds: 30
+    description: "External Nexus service for strategic guidance"
+
+  forge:
+    enabled: true
+    redis_url: ${REDIS_URL:-redis://localhost:6379}
+    channel_prefix: ag3ntwerk:forge
+    timeout_seconds: 300  # Development tasks can be slow
+    description: "External Forge service for development tasks"
+
+  sentinel:
+    enabled: true
+    redis_url: ${REDIS_URL:-redis://localhost:6379}
+    channel_prefix: ag3ntwerk:sentinel
+    timeout_seconds: 60
+    description: "External Sentinel/Citadel service for security tasks"
+
+# Coordination Settings
+# Configure Overwatch (Overwatch) behavior
+coordination:
+  drift_detection:
+    enabled: true
+    success_rate_threshold: 0.7  # Below this triggers drift
+    latency_slo_ms: 5000  # Above this triggers drift
+    escalation_cooldown_seconds: 300  # 5 minutes between escalations
+
+  load_balancing:
+    max_executive_load: 0.9  # 90% capacity max
+    rebalance_threshold: 0.3  # Rebalance if imbalance > 30%
+
+# Communication Settings
+# Configure how agents communicate
+communication:
+  mode: local  # "local" for in-process, "distributed" for Redis-based
+  redis:
+    url: "redis://localhost:6379"
+    channel_prefix: "ag3ntwerk"
+
+# Logging Settings
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null  # Set to path for file logging (e.g., "~/.ag3ntwerk/ag3ntwerk.log")
+
+# Task Settings
+tasks:
+  default_timeout: 60.0  # Default timeout for task execution
+  max_retries: 3  # Maximum retry attempts for failed tasks
+  backoff_factor: 1.5  # Exponential backoff multiplier
+  queue_size: 100  # Maximum pending tasks per agent
+
+# State Store Settings
+state:
+  db_path: "~/.ag3ntwerk/state.db"  # SQLite database path
+  cleanup_interval: 3600  # Cleanup expired entries every hour (seconds)

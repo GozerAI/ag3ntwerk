@@ -1,0 +1,27 @@
+# Docker Compose Override (Developer Customizations)
+# ===================================================
+# Copy to docker-compose.override.yml for local tweaks.
+# This file is gitignored — your overrides won't be committed.
+#
+# Usage: docker-compose up -d  (overrides are applied automatically)
+
+services:
+  # Example: mount source for live reload
+  # ag3ntwerk:
+  #   volumes:
+  #     - ./src:/app/src
+
+  # Example: enable GPU passthrough for Ollama
+  # ollama:
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+
+  # Example: expose additional ports for debugging
+  # ag3ntwerk:
+  #   ports:
+  #     - "5678:5678"  # debugpy
