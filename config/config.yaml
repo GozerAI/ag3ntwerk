@@ -60,7 +60,7 @@ workbench:
     host_port_end: 9100
 
   docker:
-    network_name: csuite_workbench_net
+    network_name: ag3ntwerk_net
     image_prefix: ag3ntwerk-workbench
     container_workdir: /workspace
     images:

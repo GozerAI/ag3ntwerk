@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial public release
 - 16 specialized agents (Overwatch, Forge, Keystone, Echo, Sentinel, Blueprint, Axiom, Index, Foundry, Citadel, Beacon, Vector, Aegis, Accord, Compass, Nexus)
-- Hierarchical agent orchestration with central Overwatch coordinator
+- Hierarchical agent orchestration with central coordinator
 - Multi-provider LLM support (Ollama, OpenAI, Anthropic, Google, and more)
 - FastAPI REST API and Model Context Protocol (MCP) server
 - Learning system with pattern propagation and experiment tracking

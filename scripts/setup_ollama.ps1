@@ -1,8 +1,8 @@
-# C-Suite Ollama Setup Script for Windows
+# ag3ntwerk Ollama Setup Script for Windows
 # ========================================
-# This script helps set up Ollama for use with C-Suite
+# This script helps set up Ollama for use with ag3ntwerk
 
-Write-Host "=== C-Suite Ollama Setup ===" -ForegroundColor Cyan
+Write-Host "=== ag3ntwerk Ollama Setup ===" -ForegroundColor Cyan
 Write-Host ""
 
 # Check if Ollama is installed
@@ -94,9 +94,9 @@ Write-Host "Available models:" -ForegroundColor Cyan
 & ollama list
 
 Write-Host ""
-Write-Host "You can now use C-Suite with Ollama!" -ForegroundColor Green
+Write-Host "You can now use ag3ntwerk with Ollama!" -ForegroundColor Green
 Write-Host ""
 Write-Host "Quick test:" -ForegroundColor Yellow
-Write-Host "  csuite status"
-Write-Host "  csuite models"
+Write-Host "  ag3ntwerk status"
+Write-Host "  ag3ntwerk models"
 Write-Host ""

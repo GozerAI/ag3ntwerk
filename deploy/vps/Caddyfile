@@ -1,11 +1,11 @@
-# C-Suite Caddy Reverse Proxy Configuration
+# ag3ntwerk Caddy Reverse Proxy Configuration
 # ===========================================
-# Replace csuite.example.com with your actual domain.
+# Replace ag3ntwerk.example.com with your actual domain.
 # Caddy will automatically obtain and renew Let's Encrypt TLS certificates.
 
-csuite.example.com {
-    # Reverse proxy to C-Suite API
-    reverse_proxy csuite:3737
+ag3ntwerk.example.com {
+    # Reverse proxy to ag3ntwerk API
+    reverse_proxy ag3ntwerk:3737
 
     # WebSocket support for relay tunnels and real-time updates
     # Caddy handles WebSocket upgrade automatically
