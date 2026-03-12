@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ag3ntwerk
+  labels:
+    app.kubernetes.io/name: ag3ntwerk
+    app.kubernetes.io/part-of: ag3ntwerk-platform

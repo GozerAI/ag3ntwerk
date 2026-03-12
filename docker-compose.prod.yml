@@ -1,0 +1,157 @@
+# ag3ntwerk Production Docker Compose
+# Usage: docker-compose -f docker-compose.prod.yml up -d
+#
+# Note: For production Kubernetes deployments, use the Helm chart instead.
+# This file is for single-node or simple multi-container deployments.
+
+services:
+  # ==========================================================================
+  # ag3ntwerk API Service
+  # ==========================================================================
+  ag3ntwerk:
+    build:
+      context: .
+      target: production
+    image: ag3ntwerk:${AGENTWERK_VERSION:-latest}
+    container_name: ag3ntwerk-api
+    ports:
+      - "3737:3737"
+    environment:
+      - AGENTWERK_ENV=production
+      - AGENTWERK_HOST=0.0.0.0
+      - AGENTWERK_PORT=3737
+      - DATABASE_BACKEND=${DATABASE_BACKEND:-postgresql}
+      - PG_HOST=${PG_HOST:-postgres}
+      - PG_PORT=${PG_PORT:-5432}
+      - PG_DATABASE=${PG_DATABASE:-ag3ntwerk}
+      - PG_USER=${PG_USER:-ag3ntwerk}
+      - PG_PASSWORD=${PG_PASSWORD:?PG_PASSWORD is required}
+      - REDIS_URL=${REDIS_URL:?REDIS_URL is required (e.g. redis://:password@redis:6379)}
+      - AGENTWERK_USE_MIGRATIONS=true
+      - AGENTWERK_SECRETS_KEY=${AGENTWERK_SECRETS_KEY:?AGENTWERK_SECRETS_KEY is required}
+      # LLM Provider Configuration
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OLLAMA_HOST=${OLLAMA_HOST:-}
+      # Revenue Stack — Social Integrations
+      - LINKEDIN_ACCESS_TOKEN=${LINKEDIN_ACCESS_TOKEN:-}
+      - LINKEDIN_PERSON_URN=${LINKEDIN_PERSON_URN:-}
+      - TWITTER_BEARER_TOKEN=${TWITTER_BEARER_TOKEN:-}
+      - TWITTER_API_KEY=${TWITTER_API_KEY:-}
+      - TWITTER_API_SECRET=${TWITTER_API_SECRET:-}
+      - TWITTER_ACCESS_TOKEN=${TWITTER_ACCESS_TOKEN:-}
+      - TWITTER_ACCESS_SECRET=${TWITTER_ACCESS_SECRET:-}
+      # Revenue Stack — Payment Integrations
+      - GUMROAD_ACCESS_TOKEN=${GUMROAD_ACCESS_TOKEN:-}
+      # Revenue Stack — Voice
+      - WHISPER_BACKEND=${WHISPER_BACKEND:-auto}
+    volumes:
+      - ag3ntwerk-data:/app/data
+      - ag3ntwerk-logs:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3737/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+    networks:
+      - ag3ntwerk-network
+
+  # ==========================================================================
+  # PostgreSQL Database
+  # ==========================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: ag3ntwerk-postgres
+    environment:
+      - POSTGRES_DB=${PG_DATABASE:-ag3ntwerk}
+      - POSTGRES_USER=${PG_USER:-ag3ntwerk}
+      - POSTGRES_PASSWORD=${PG_PASSWORD:?PG_PASSWORD is required}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PG_USER:-ag3ntwerk} -d ${PG_DATABASE:-ag3ntwerk}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "3"
+    networks:
+      - ag3ntwerk-network
+
+  # ==========================================================================
+  # Redis for Distributed Communication
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: ag3ntwerk-redis
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 256mb
+      --maxmemory-policy allkeys-lru
+      --requirepass ${REDIS_PASSWORD:?REDIS_PASSWORD is required}
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD}", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+    networks:
+      - ag3ntwerk-network
+
+# ==========================================================================
+# Volumes
+# ==========================================================================
+volumes:
+  ag3ntwerk-data:
+  ag3ntwerk-logs:
+  postgres-data:
+  redis-data:
+
+# ==========================================================================
+# Networks
+# ==========================================================================
+networks:
+  ag3ntwerk-network:
+    driver: bridge

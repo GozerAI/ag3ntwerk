@@ -1,0 +1,23 @@
+apiVersion: v2
+name: ag3ntwerk
+description: ag3ntwerk AI Agent Platform - Hierarchical AI Agent Orchestration
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+
+keywords:
+  - ai
+  - agents
+  - llm
+  - orchestration
+  - kubernetes
+
+home: https://github.com/ag3ntwerk/ag3ntwerk
+sources:
+  - https://github.com/ag3ntwerk/ag3ntwerk
+
+maintainers:
+  - name: ag3ntwerk Team
+    email: team@ag3ntwerk.dev
+
+dependencies: []

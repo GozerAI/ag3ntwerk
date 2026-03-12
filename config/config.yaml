@@ -1,0 +1,75 @@
+
+# Nexus Intelligence Configuration
+# Models configured to use local Ollama
+
+model_ensemble:
+  provider: ollama
+  base_url: http://localhost:11434
+  models:
+    - name: qwen2.5:14b
+      weight: 0.4
+    - name: qwen2.5:7b
+      weight: 0.3
+    - name: devstral:latest
+      weight: 0.3
+
+feedback_loop:
+  active: true
+  hallucination_check: true
+
+# Storage paths
+storage:
+  data_dir: data
+  chroma_path: data/chroma
+  sqlite_path: data/nexus.db
+
+# Ollama settings
+ollama:
+  host: http://localhost:11434
+  timeout: 120
+  default_model: qwen2.5:7b
+
+# Logging
+logging:
+  level: INFO
+  file: logs/nexus.log
+
+# Workbench Module Configuration
+workbench:
+  enabled: true
+  root_dir: data/workspaces
+  runner: docker  # docker or fake (for testing without Docker)
+
+  security:
+    localhost_only: true
+    # auth_token: set via AGENTWERK_WORKBENCH_AUTH_TOKEN env var
+    container_user: runner
+    drop_capabilities: true
+    disable_privileged: true
+    pids_limit: 256
+
+  resources:
+    cpu_quota: 2.0
+    memory_limit: 2g
+    storage_limit: 10g
+
+  ide:
+    mode: codeserver_single  # codeserver_single or codeserver_per_workspace
+    codeserver_port: 8080
+    host_port_start: 9000
+    host_port_end: 9100
+
+  docker:
+    network_name: csuite_workbench_net
+    image_prefix: ag3ntwerk-workbench
+    container_workdir: /workspace
+    images:
+      python: python:3.11-slim
+      node: node:20-slim
+      go: golang:1.22-alpine
+      rust: rust:1.77-slim
+
+  preview:
+    host: localhost
+    port_start: 8100
+    port_end: 8200

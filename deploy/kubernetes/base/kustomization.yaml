@@ -1,0 +1,48 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: ag3ntwerk
+
+resources:
+  - namespace.yaml
+  - serviceaccount.yaml
+  - deployment.yaml
+  - service.yaml
+  - hpa.yaml
+  - pdb.yaml
+
+# Secrets are generated from an env file that is NOT checked into git.
+# Copy secret.env.example to secret.env and fill in real values before deploying.
+secretGenerator:
+  - name: ag3ntwerk-secrets
+    envs:
+      - secret.env
+
+# Use configMapGenerator for better overlay support
+configMapGenerator:
+  - name: ag3ntwerk-config
+    literals:
+      - AGENTWERK_ENV=production
+      - AGENTWERK_HOST=0.0.0.0
+      - AGENTWERK_PORT=3737
+      - DATABASE_BACKEND=postgresql
+      - PG_PORT=5432
+      - PG_DATABASE=ag3ntwerk
+      - DATABASE_POOL_SIZE=10
+      - DATABASE_MAX_OVERFLOW=20
+      - AGENTWERK_USE_MIGRATIONS=true
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+      - OTEL_SERVICE_NAME=ag3ntwerk
+      - OTEL_TRACES_SAMPLER=parentbased_traceidratio
+      - OTEL_TRACES_SAMPLER_ARG=0.1
+
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: ag3ntwerk-platform
+      app.kubernetes.io/managed-by: kustomize
+
+images:
+  - name: ag3ntwerk
+    newName: ag3ntwerk
+    newTag: "0.1.0"
