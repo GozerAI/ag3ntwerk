@@ -37,7 +37,7 @@ def print_banner():
     banner = f"""{Colors.CYAN}
     ╔═══════════════════════════════════════════════════════════╗
     ║                                                           ║
-    ║   {Colors.BOLD}C-SUITE COMMAND CENTER{Colors.CYAN}                              ║
+    ║   {Colors.BOLD}AG3NTWERK COMMAND CENTER{Colors.CYAN}                              ║
     ║   Your Unified Dashboard for All Affairs                  ║
     ║                                                           ║
     ╚═══════════════════════════════════════════════════════════╝
@@ -76,18 +76,18 @@ def start_api_server(host: str = "127.0.0.1", port: int = 8000):
 
     # Add project paths to Python path
     project_root = find_project_root()
-    csuite_src = project_root / "src" / "ag3ntwerk"
+    agentwerk_src = project_root / "src" / "ag3ntwerk"
     nexus_src = project_root / "src" / "nexus" / "src"
 
     # Add to sys.path for this process
     if str(nexus_src) not in sys.path:
         sys.path.insert(0, str(nexus_src))
-    if str(csuite_src) not in sys.path:
-        sys.path.insert(0, str(csuite_src))
+    if str(agentwerk_src) not in sys.path:
+        sys.path.insert(0, str(agentwerk_src))
 
     # Also set PYTHONPATH for uvicorn's reloader subprocess
     python_path = os.environ.get("PYTHONPATH", "")
-    paths = [str(nexus_src), str(csuite_src)]
+    paths = [str(nexus_src), str(agentwerk_src)]
     if python_path:
         paths.append(python_path)
     os.environ["PYTHONPATH"] = os.pathsep.join(paths)
@@ -95,7 +95,7 @@ def start_api_server(host: str = "127.0.0.1", port: int = 8000):
     print(f"{Colors.CYAN}  → PYTHONPATH: {os.environ['PYTHONPATH']}{Colors.ENDC}")
 
     # Change to the ag3ntwerk directory
-    os.chdir(str(csuite_src))
+    os.chdir(str(agentwerk_src))
 
     import uvicorn
 
@@ -104,7 +104,7 @@ def start_api_server(host: str = "127.0.0.1", port: int = 8000):
         host=host,
         port=port,
         reload=True,
-        reload_dirs=[str(csuite_src), str(nexus_src)],
+        reload_dirs=[str(agentwerk_src), str(nexus_src)],
         log_level="info",
     )
 

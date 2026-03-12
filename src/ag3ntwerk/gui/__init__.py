@@ -8,6 +8,6 @@ Simple dashboard showing:
 """
 
 from .app import COODashboard, run
-from .backend import CSuiteBackend, AsyncBridge
+from .backend import AgentBackend, AsyncBridge
 
-__all__ = ["COODashboard", "run", "CSuiteBackend", "AsyncBridge"]
+__all__ = ["COODashboard", "run", "AgentBackend", "AsyncBridge"]

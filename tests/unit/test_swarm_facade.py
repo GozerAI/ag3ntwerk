@@ -132,7 +132,7 @@ class TestSwarmFacadeDelegation:
         call_kwargs = facade._service.submit_task.call_args
         metadata = call_kwargs.kwargs.get("metadata") or call_kwargs[1].get("metadata")
         assert metadata["preferred_model"] == "ag3ntwerk-technical"
-        assert metadata["csuite_agent"] == "Forge"
+        assert metadata["ag3ntwerk_agent"] == "Forge"
         assert "code_review" in metadata["task_tags"]
 
     @pytest.mark.asyncio

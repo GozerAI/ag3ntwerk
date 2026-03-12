@@ -3,8 +3,8 @@ Unit tests for the ag3ntwerk Initialization Factory.
 
 Tests:
 - create_overwatch_with_agents() function
-- initialize_csuite() async function
-- CSuiteSystem container
+- initialize_system() async function
+- AgentSystem container
 - Agent wiring logic
 """
 
@@ -12,11 +12,11 @@ import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from ag3ntwerk.initialization import (
-    CSuiteSystem,
+    AgentSystem,
     SKIP_AGENTS,
     ACTIVE_AGENTS,
     create_overwatch_with_agents,
-    initialize_csuite,
+    initialize_system,
 )
 
 
@@ -58,13 +58,13 @@ class TestConstants:
         assert SKIP_AGENTS.isdisjoint(ACTIVE_AGENTS)
 
 
-class TestCSuiteSystem:
-    """Test CSuiteSystem container."""
+class TestAgentSystem:
+    """Test AgentSystem container."""
 
     def test_system_creation(self):
         """Test basic system creation."""
         mock_cos = MagicMock()
-        system = CSuiteSystem(
+        system = AgentSystem(
             cos=mock_cos,
             registered_executives=["Forge", "Keystone"],
         )
@@ -80,7 +80,7 @@ class TestCSuiteSystem:
         mock_cos = MagicMock()
         mock_orchestrator = MagicMock()
 
-        system = CSuiteSystem(
+        system = AgentSystem(
             cos=mock_cos,
             learning_orchestrator=mock_orchestrator,
             registered_executives=["Forge", "Keystone", "Sentinel"],
@@ -94,7 +94,7 @@ class TestCSuiteSystem:
     def test_get_status(self):
         """Test status reporting."""
         mock_cos = MagicMock()
-        system = CSuiteSystem(
+        system = AgentSystem(
             cos=mock_cos,
             registered_executives=["Forge", "Keystone"],
             learning_enabled=False,
@@ -220,8 +220,8 @@ class TestCreateCosWithExecutives:
             assert mock_cos.register_subordinate.call_count == 1
 
 
-class TestInitializeCSuite:
-    """Test initialize_csuite async function."""
+class TestInitializeSystem:
+    """Test initialize_system async function."""
 
     @pytest.mark.asyncio
     async def test_basic_initialization(self):
@@ -242,12 +242,12 @@ class TestInitializeCSuite:
             mock_registry.get.return_value = MagicMock()
             MockRegistry.return_value = mock_registry
 
-            result = await initialize_csuite(
+            result = await initialize_system(
                 llm_provider=mock_provider,
                 enable_learning=False,
             )
 
-            assert isinstance(result, CSuiteSystem)
+            assert isinstance(result, AgentSystem)
             assert result.cos == mock_cos
             assert result.learning_enabled is False
             assert len(result.registered_executives) == 2  # Forge, Keystone
@@ -270,7 +270,7 @@ class TestInitializeCSuite:
             mock_registry.get_available_codes.return_value = ["Nexus", "Overwatch"]
             MockRegistry.return_value = mock_registry
 
-            result = await initialize_csuite(
+            result = await initialize_system(
                 llm_provider=mock_provider,
                 enable_learning=True,  # Requested but no db
                 db=None,
@@ -299,7 +299,7 @@ class TestInitializeCSuite:
             mock_registry.get.return_value = MagicMock()
             MockRegistry.return_value = mock_registry
 
-            result = await initialize_csuite(
+            result = await initialize_system(
                 llm_provider=mock_provider,
                 enable_learning=False,
                 config={

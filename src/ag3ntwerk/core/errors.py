@@ -447,7 +447,7 @@ async def validation_exception_handler(
 
 
 # Register ag3ntwerk exception mappings
-def register_csuite_exceptions() -> None:
+def register_exceptions() -> None:
     """Register mappings for ag3ntwerk custom exceptions."""
     try:
         from ag3ntwerk.core.exceptions import (
@@ -483,7 +483,7 @@ def register_csuite_exceptions() -> None:
 
 
 # Register on import
-register_csuite_exceptions()
+register_exceptions()
 
 
 __all__ = [
@@ -504,5 +504,5 @@ __all__ = [
     "generic_exception_handler",
     "http_exception_handler",
     "validation_exception_handler",
-    "register_csuite_exceptions",
+    "register_exceptions",
 ]

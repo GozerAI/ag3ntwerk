@@ -59,7 +59,7 @@ class AgentRegistry:
         "Nexus": ("ag3ntwerk.agents.nexus", "Nexus"),
     }
 
-    # Backward-compatibility aliases: old C-suite code -> codename
+    # Backward-compatibility aliases: old agent code -> codename
     AGENT_ALIASES = {
         "CoS": "Overwatch",
         "CTO": "Forge",
@@ -104,7 +104,7 @@ class AgentRegistry:
         # Keys are already codenames; map lowercase codename -> key
         for codename in self.STANDARD_AGENTS:
             self._codename_map[codename.lower()] = codename
-        # Also register old C-suite aliases so get() works with legacy codes
+        # Also register old agent aliases so get() works with legacy codes
         for alias, codename in self.AGENT_ALIASES.items():
             self._codename_map[alias.lower()] = codename
 
@@ -179,7 +179,7 @@ class AgentRegistry:
         Get an agent by codename or legacy code.
 
         Lazily instantiates if not already created.
-        Accepts codenames ("Blueprint", "Keystone") or legacy C-suite codes
+        Accepts codenames ("Blueprint", "Keystone") or legacy agent codes
         ("CPO", "CFO") via AGENT_ALIASES.
 
         Args:

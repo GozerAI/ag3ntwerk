@@ -1,8 +1,8 @@
 """
-Tests for CSuiteBridgeListener (Sprint 2.2).
+Tests for AgentBridgeListener (Sprint 2.2).
 
 Tests cover:
-- CSuiteBridgeListener initialization
+- AgentBridgeListener initialization
 - Connection and disconnection
 - Guidance request handling
 - Outcome report handling
@@ -25,7 +25,7 @@ _nexus_src_path = os.path.abspath(
 )
 
 
-# Import the csuite_bridge module directly to avoid conflicts with other nexus packages
+# Import the agent_bridge module directly to avoid conflicts with other nexus packages
 def _import_from_path(module_name: str, file_path: str):
     """Import a module from a specific file path."""
     spec = importlib.util.spec_from_file_location(module_name, file_path)
@@ -35,34 +35,34 @@ def _import_from_path(module_name: str, file_path: str):
     return module
 
 
-# Import the csuite_bridge module directly
-_csuite_bridge_path = os.path.join(_nexus_src_path, "nexus", "coo", "csuite_bridge.py")
+# Import the agent_bridge module directly
+_agent_bridge_path = os.path.join(_nexus_src_path, "nexus", "coo", "agent_bridge.py")
 
 # Check if the file exists before trying to import
-if os.path.exists(_csuite_bridge_path):
-    _csuite_bridge_module = _import_from_path("test_csuite_bridge", _csuite_bridge_path)
-    CSuiteBridgeListener = _csuite_bridge_module.CSuiteBridgeListener
-    CSuiteBridgeConfig = _csuite_bridge_module.CSuiteBridgeConfig
+if os.path.exists(_agent_bridge_path):
+    _agent_bridge_module = _import_from_path("test_agent_bridge", _agent_bridge_path)
+    AgentBridgeListener = _agent_bridge_module.AgentBridgeListener
+    AgentBridgeConfig = _agent_bridge_module.AgentBridgeConfig
     AGENTWERK_BRIDGE_AVAILABLE = True
 else:
     AGENTWERK_BRIDGE_AVAILABLE = False
-    CSuiteBridgeListener = None
-    CSuiteBridgeConfig = None
+    AgentBridgeListener = None
+    AgentBridgeConfig = None
 
 
 # Skip all tests if module not available
 pytestmark = pytest.mark.skipif(
-    not AGENTWERK_BRIDGE_AVAILABLE, reason="CSuiteBridgeListener not available"
+    not AGENTWERK_BRIDGE_AVAILABLE, reason="AgentBridgeListener not available"
 )
 
 
-class TestCSuiteBridgeListenerInit:
-    """Test CSuiteBridgeListener initialization."""
+class TestAgentBridgeListenerInit:
+    """Test AgentBridgeListener initialization."""
 
     def test_init_with_defaults(self):
-        """CSuiteBridgeListener should initialize with default config."""
+        """AgentBridgeListener should initialize with default config."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         assert listener._coo is mock_coo
         assert listener.config.redis_url == "redis://localhost:6379"
@@ -71,23 +71,23 @@ class TestCSuiteBridgeListenerInit:
         assert listener.is_listening is False
 
     def test_init_with_custom_config(self):
-        """CSuiteBridgeListener should accept custom config."""
+        """AgentBridgeListener should accept custom config."""
         mock_coo = MagicMock()
-        config = CSuiteBridgeConfig(
+        config = AgentBridgeConfig(
             redis_url="redis://custom:6380",
             channel_prefix="custom:prefix",
             response_timeout_seconds=60,
         )
-        listener = CSuiteBridgeListener(mock_coo, config)
+        listener = AgentBridgeListener(mock_coo, config)
 
         assert listener.config.redis_url == "redis://custom:6380"
         assert listener.config.channel_prefix == "custom:prefix"
         assert listener.config.response_timeout_seconds == 60
 
     def test_init_metrics_zeroed(self):
-        """CSuiteBridgeListener should start with zero metrics."""
+        """AgentBridgeListener should start with zero metrics."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         assert listener._guidance_requests_received == 0
         assert listener._guidance_responses_sent == 0
@@ -96,14 +96,14 @@ class TestCSuiteBridgeListenerInit:
         assert listener._directives_sent == 0
 
 
-class TestCSuiteBridgeListenerConnection:
+class TestAgentBridgeListenerConnection:
     """Test connection and disconnection."""
 
     @pytest.mark.asyncio
     async def test_connect_success(self):
         """connect() should return True on successful connection."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         with patch.dict("sys.modules", {"redis": MagicMock(), "redis.asyncio": MagicMock()}):
             # Reimport with mock
@@ -136,7 +136,7 @@ class TestCSuiteBridgeListenerConnection:
     async def test_disconnect(self):
         """disconnect() should close Redis connection."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         mock_redis_client = AsyncMock()
         listener._redis = mock_redis_client
@@ -148,14 +148,14 @@ class TestCSuiteBridgeListenerConnection:
         assert listener.is_connected is False
 
 
-class TestCSuiteBridgeListenerListening:
+class TestAgentBridgeListenerListening:
     """Test start/stop listening."""
 
     @pytest.mark.asyncio
     async def test_start_listening_already_listening(self):
         """start_listening() should return True if already listening."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._connected = True
         listener._listening = True
 
@@ -169,7 +169,7 @@ class TestCSuiteBridgeListenerListening:
         import asyncio
 
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._listening = True
 
         # Create a real asyncio task that we can cancel
@@ -208,7 +208,7 @@ class TestGuidanceRequestHandling:
             max_concurrent_executions=3,
             auto_execute_confidence=0.9,
         )
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._connected = True
         listener._redis = AsyncMock()
 
@@ -231,7 +231,7 @@ class TestGuidanceRequestHandling:
             max_concurrent_executions=3,
             auto_execute_confidence=0.9,
         )
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._connected = True
         listener._redis = AsyncMock()
 
@@ -256,7 +256,7 @@ class TestOutcomeReportHandling:
         """handle_outcome_report() should increment counter."""
         mock_coo = MagicMock()
         mock_coo._learning = None  # No learning system
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         report = {
             "type": "outcome_report",
@@ -279,7 +279,7 @@ class TestOutcomeReportHandling:
         mock_learning = MagicMock()
         mock_learning.record_external_outcome = AsyncMock()
         mock_coo._learning = mock_learning
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         report = {
             "type": "outcome_report",
@@ -302,7 +302,7 @@ class TestHealthUpdateHandling:
     async def test_handle_health_update_stores_data(self):
         """Health update should be stored."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
 
         health_data = {
             "type": "health_status",
@@ -317,16 +317,16 @@ class TestHealthUpdateHandling:
         await listener._handle_health_update(health_data)
 
         assert listener._health_updates_received == 1
-        assert listener._last_csuite_health is not None
-        assert listener._last_csuite_health["cos_metrics"]["tasks_completed"] == 10
+        assert listener._last_agent_health is not None
+        assert listener._last_agent_health["cos_metrics"]["tasks_completed"] == 10
 
-    def test_get_csuite_health_returns_last_health(self):
-        """get_csuite_health() should return last received health."""
+    def test_get_agent_health_returns_last_health(self):
+        """get_agent_health() should return last received health."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
-        listener._last_csuite_health = {"status": "healthy"}
+        listener = AgentBridgeListener(mock_coo)
+        listener._last_agent_health = {"status": "healthy"}
 
-        health = listener.get_csuite_health()
+        health = listener.get_agent_health()
 
         assert health == {"status": "healthy"}
 
@@ -338,7 +338,7 @@ class TestDirectivePublishing:
     async def test_publish_directive_success(self):
         """publish_directive() should publish to Redis channel."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._connected = True
         listener._redis = AsyncMock()
 
@@ -357,7 +357,7 @@ class TestDirectivePublishing:
     async def test_publish_directive_not_connected(self):
         """publish_directive() should return False if not connected."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._connected = False
 
         directive = {"type": "test"}
@@ -374,7 +374,7 @@ class TestStatus:
     def test_get_status_returns_comprehensive_info(self):
         """get_status() should return comprehensive status."""
         mock_coo = MagicMock()
-        listener = CSuiteBridgeListener(mock_coo)
+        listener = AgentBridgeListener(mock_coo)
         listener._connected = True
         listener._listening = True
         listener._guidance_requests_received = 5
@@ -387,15 +387,15 @@ class TestStatus:
         assert status["metrics"]["guidance_requests_received"] == 5
         assert status["metrics"]["outcomes_received"] == 10
         assert "config" in status
-        assert "csuite_health" in status
+        assert "agent_health" in status
 
 
-class TestCSuiteBridgeConfig:
-    """Test CSuiteBridgeConfig dataclass."""
+class TestAgentBridgeConfig:
+    """Test AgentBridgeConfig dataclass."""
 
     def test_config_defaults(self):
-        """CSuiteBridgeConfig should have sensible defaults."""
-        config = CSuiteBridgeConfig()
+        """AgentBridgeConfig should have sensible defaults."""
+        config = AgentBridgeConfig()
 
         assert config.redis_url == "redis://localhost:6379"
         assert config.channel_prefix == "ag3ntwerk:nexus"
@@ -404,8 +404,8 @@ class TestCSuiteBridgeConfig:
         assert config.max_reconnect_attempts == 10
 
     def test_config_custom_values(self):
-        """CSuiteBridgeConfig should accept custom values."""
-        config = CSuiteBridgeConfig(
+        """AgentBridgeConfig should accept custom values."""
+        config = AgentBridgeConfig(
             redis_url="redis://custom:6380",
             channel_prefix="test:prefix",
             response_timeout_seconds=60,

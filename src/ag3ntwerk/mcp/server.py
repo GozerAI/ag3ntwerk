@@ -77,7 +77,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_find_executive_for_task",
+            name="ag3ntwerk_find_executive_for_task",
             description="Find agents that can handle a specific task type.",
             inputSchema={
                 "type": "object",
@@ -91,7 +91,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_execute_task",
+            name="ag3ntwerk_execute_task",
             description="Execute a task with a specific agent.",
             inputSchema={
                 "type": "object",
@@ -123,7 +123,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_route_task",
+            name="ag3ntwerk_route_task",
             description="Route a task through Nexus for automatic agent assignment.",
             inputSchema={
                 "type": "object",
@@ -151,7 +151,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_list_workflows",
+            name="ag3ntwerk_list_workflows",
             description="List all available workflows.",
             inputSchema={
                 "type": "object",
@@ -160,7 +160,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_run_workflow",
+            name="ag3ntwerk_run_workflow",
             description="Execute a predefined workflow.",
             inputSchema={
                 "type": "object",
@@ -179,7 +179,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_system_status",
+            name="ag3ntwerk_system_status",
             description="Get overall ag3ntwerk system status.",
             inputSchema={
                 "type": "object",
@@ -188,7 +188,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="csuite_agent_capabilities",
+            name="ag3ntwerk_agent_capabilities",
             description="Get capabilities of one or all agents.",
             inputSchema={
                 "type": "object",
@@ -283,13 +283,13 @@ class AgentWerkMCPServer:
         handlers = {
             "ag3ntwerk_list_agents": self._handle_list_agents,
             "ag3ntwerk_get_agent": self._handle_get_agent,
-            "csuite_find_executive_for_task": self._handle_find_executive,
-            "csuite_execute_task": self._handle_execute_task,
-            "csuite_route_task": self._handle_route_task,
-            "csuite_list_workflows": self._handle_list_workflows,
-            "csuite_run_workflow": self._handle_run_workflow,
-            "csuite_system_status": self._handle_system_status,
-            "csuite_agent_capabilities": self._handle_capabilities,
+            "ag3ntwerk_find_executive_for_task": self._handle_find_executive,
+            "ag3ntwerk_execute_task": self._handle_execute_task,
+            "ag3ntwerk_route_task": self._handle_route_task,
+            "ag3ntwerk_list_workflows": self._handle_list_workflows,
+            "ag3ntwerk_run_workflow": self._handle_run_workflow,
+            "ag3ntwerk_system_status": self._handle_system_status,
+            "ag3ntwerk_agent_capabilities": self._handle_capabilities,
         }
         return handlers.get(tool_name)
 

@@ -36,7 +36,7 @@ def print_banner():
     banner = """
     ╔═══════════════════════════════════════════════════════════╗
     ║                                                           ║
-    ║          C-SUITE COMMAND CENTER                           ║
+    ║          AG3NTWERK COMMAND CENTER                           ║
     ║          Autonomous AI Agent System                   ║
     ║                                                           ║
     ╠═══════════════════════════════════════════════════════════╣

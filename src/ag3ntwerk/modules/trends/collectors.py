@@ -53,7 +53,7 @@ class TrendCollector(ABC):
         """Make HTTP request and return JSON response."""
         try:
             req = urllib.request.Request(url)
-            req.add_header("User-Agent", "CSuite-TrendCollector/1.0")
+            req.add_header("User-Agent", "Ag3ntwerk-TrendCollector/1.0")
             if headers:
                 for key, value in headers.items():
                     req.add_header(key, value)

@@ -148,22 +148,22 @@ export default function ContentPipeline() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-csuite-text">Content Pipeline</h1>
-          <p className="text-csuite-muted mt-1">
+          <h1 className="text-3xl font-bold text-aw-text">Content Pipeline</h1>
+          <p className="text-aw-muted mt-1">
             Monitor content creation and distribution workflows
           </p>
         </div>
         <div className="flex gap-3">
           <button
             onClick={() => setShowStartPipeline(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-csuite-success text-white rounded-lg hover:bg-green-600"
+            className="flex items-center gap-2 px-4 py-2 bg-aw-success text-white rounded-lg hover:bg-green-600"
           >
             <Play size={18} />
             Start Pipeline
           </button>
           <button
             onClick={() => setShowCreateContent(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600"
+            className="flex items-center gap-2 px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600"
           >
             <Plus size={18} />
             New Content
@@ -205,15 +205,15 @@ export default function ContentPipeline() {
         {/* Active Pipelines */}
         <div className="lg:col-span-2 space-y-6">
           {/* Pipeline Executions */}
-          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-csuite-text flex items-center gap-2">
-                <Zap size={20} className="text-csuite-warning" />
+              <h2 className="text-lg font-semibold text-aw-text flex items-center gap-2">
+                <Zap size={20} className="text-aw-warning" />
                 Pipeline Executions
               </h2>
               <button
                 onClick={fetchExecutions}
-                className="text-csuite-muted hover:text-csuite-text"
+                className="text-aw-muted hover:text-aw-text"
               >
                 <RefreshCw size={18} />
               </button>
@@ -224,19 +224,19 @@ export default function ContentPipeline() {
                 {executions.slice(0, 5).map((execution) => (
                   <div
                     key={execution.id}
-                    className="bg-csuite-card rounded-lg p-4 cursor-pointer hover:bg-csuite-surface transition-colors"
+                    className="bg-aw-card rounded-lg p-4 cursor-pointer hover:bg-aw-surface transition-colors"
                     onClick={() => setSelectedExecution(execution)}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-medium text-csuite-text">{execution.campaign}</h3>
+                      <h3 className="font-medium text-aw-text">{execution.campaign}</h3>
                       <StatusBadge status={execution.status} />
                     </div>
                     {execution.current_step && (
-                      <p className="text-sm text-csuite-muted mb-2">
+                      <p className="text-sm text-aw-muted mb-2">
                         Current: {formatStepName(execution.current_step)}
                       </p>
                     )}
-                    <div className="flex items-center gap-4 text-xs text-csuite-muted">
+                    <div className="flex items-center gap-4 text-xs text-aw-muted">
                       <span>
                         {execution.steps.filter((s) => s.status === 'completed').length}/
                         {execution.steps.length} steps
@@ -246,9 +246,9 @@ export default function ContentPipeline() {
                       )}
                     </div>
                     {execution.status === 'in_progress' && (
-                      <div className="mt-3 h-1.5 bg-csuite-surface rounded-full overflow-hidden">
+                      <div className="mt-3 h-1.5 bg-aw-surface rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-csuite-accent rounded-full transition-all"
+                          className="h-full bg-aw-accent rounded-full transition-all"
                           style={{
                             width: `${
                               (execution.steps.filter((s) => s.status === 'completed').length /
@@ -264,23 +264,23 @@ export default function ContentPipeline() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Zap size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
-                <p className="text-csuite-muted">No pipeline executions yet</p>
-                <p className="text-sm text-csuite-muted mt-1">Start a pipeline to see it here</p>
+                <Zap size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
+                <p className="text-aw-muted">No pipeline executions yet</p>
+                <p className="text-sm text-aw-muted mt-1">Start a pipeline to see it here</p>
               </div>
             )}
           </section>
 
           {/* Content Library */}
-          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-csuite-text flex items-center gap-2">
-                <FileText size={20} className="text-csuite-accent" />
+              <h2 className="text-lg font-semibold text-aw-text flex items-center gap-2">
+                <FileText size={20} className="text-aw-accent" />
                 Content Library
               </h2>
               <button
                 onClick={fetchContent}
-                className="text-csuite-muted hover:text-csuite-text"
+                className="text-aw-muted hover:text-aw-text"
               >
                 <RefreshCw size={18} />
               </button>
@@ -289,19 +289,19 @@ export default function ContentPipeline() {
             {content.length > 0 ? (
               <div className="space-y-3">
                 {content.slice(0, 5).map((piece) => (
-                  <div key={piece.id} className="bg-csuite-card rounded-lg p-4">
+                  <div key={piece.id} className="bg-aw-card rounded-lg p-4">
                     <div className="flex items-start justify-between">
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-medium text-csuite-text">{piece.title}</h3>
-                        <p className="text-sm text-csuite-muted mt-1 line-clamp-2">
+                        <h3 className="font-medium text-aw-text">{piece.title}</h3>
+                        <p className="text-sm text-aw-muted mt-1 line-clamp-2">
                           {piece.summary || piece.body.slice(0, 100) + '...'}
                         </p>
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs px-2 py-0.5 bg-csuite-surface rounded text-csuite-muted">
+                          <span className="text-xs px-2 py-0.5 bg-aw-surface rounded text-aw-muted">
                             {piece.format}
                           </span>
                           {piece.published_platforms.length > 0 && (
-                            <span className="text-xs text-csuite-success flex items-center gap-1">
+                            <span className="text-xs text-aw-success flex items-center gap-1">
                               <Share2 size={12} />
                               {piece.published_platforms.length} platforms
                             </span>
@@ -314,8 +314,8 @@ export default function ContentPipeline() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <FileText size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
-                <p className="text-csuite-muted">No content yet</p>
+                <FileText size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
+                <p className="text-aw-muted">No content yet</p>
               </div>
             )}
           </section>
@@ -325,13 +325,13 @@ export default function ContentPipeline() {
         <div className="space-y-6">
           {/* Format Breakdown */}
           {stats && Object.keys(stats.content.by_format).length > 0 && (
-            <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
-              <h2 className="text-lg font-semibold text-csuite-text mb-4">Content by Format</h2>
+            <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
+              <h2 className="text-lg font-semibold text-aw-text mb-4">Content by Format</h2>
               <div className="space-y-3">
                 {Object.entries(stats.content.by_format).map(([format, count]) => (
                   <div key={format} className="flex items-center justify-between">
-                    <span className="text-csuite-text capitalize">{format.replace('_', ' ')}</span>
-                    <span className="text-csuite-muted">{count}</span>
+                    <span className="text-aw-text capitalize">{format.replace('_', ' ')}</span>
+                    <span className="text-aw-muted">{count}</span>
                   </div>
                 ))}
               </div>
@@ -340,13 +340,13 @@ export default function ContentPipeline() {
 
           {/* Platforms */}
           {stats && stats.distribution.platforms_used.length > 0 && (
-            <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
-              <h2 className="text-lg font-semibold text-csuite-text mb-4">Active Platforms</h2>
+            <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
+              <h2 className="text-lg font-semibold text-aw-text mb-4">Active Platforms</h2>
               <div className="flex flex-wrap gap-2">
                 {stats.distribution.platforms_used.map((platform) => (
                   <span
                     key={platform}
-                    className="px-3 py-1 bg-csuite-card rounded-full text-sm text-csuite-text"
+                    className="px-3 py-1 bg-aw-card rounded-full text-sm text-aw-text"
                   >
                     {platform}
                   </span>
@@ -356,29 +356,29 @@ export default function ContentPipeline() {
           )}
 
           {/* Quick Actions */}
-          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
-            <h2 className="text-lg font-semibold text-csuite-text mb-4">Quick Actions</h2>
+          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
+            <h2 className="text-lg font-semibold text-aw-text mb-4">Quick Actions</h2>
             <div className="space-y-2">
               <button
                 onClick={() => setShowStartPipeline(true)}
-                className="w-full flex items-center gap-3 p-3 bg-csuite-card rounded-lg hover:bg-csuite-accent/10 transition-colors"
+                className="w-full flex items-center gap-3 p-3 bg-aw-card rounded-lg hover:bg-aw-accent/10 transition-colors"
               >
-                <Play size={18} className="text-csuite-success" />
-                <span className="text-csuite-text">Start New Pipeline</span>
+                <Play size={18} className="text-aw-success" />
+                <span className="text-aw-text">Start New Pipeline</span>
               </button>
               <button
                 onClick={() => setShowCreateContent(true)}
-                className="w-full flex items-center gap-3 p-3 bg-csuite-card rounded-lg hover:bg-csuite-accent/10 transition-colors"
+                className="w-full flex items-center gap-3 p-3 bg-aw-card rounded-lg hover:bg-aw-accent/10 transition-colors"
               >
-                <Plus size={18} className="text-csuite-accent" />
-                <span className="text-csuite-text">Create Content</span>
+                <Plus size={18} className="text-aw-accent" />
+                <span className="text-aw-text">Create Content</span>
               </button>
               <button
                 onClick={fetchAll}
-                className="w-full flex items-center gap-3 p-3 bg-csuite-card rounded-lg hover:bg-csuite-accent/10 transition-colors"
+                className="w-full flex items-center gap-3 p-3 bg-aw-card rounded-lg hover:bg-aw-accent/10 transition-colors"
               >
-                <RefreshCw size={18} className="text-csuite-muted" />
-                <span className="text-csuite-text">Refresh All</span>
+                <RefreshCw size={18} className="text-aw-muted" />
+                <span className="text-aw-text">Refresh All</span>
               </button>
             </div>
           </section>
@@ -434,15 +434,15 @@ function StatCard({
   color: 'success' | 'warning' | 'error' | 'accent'
 }) {
   const colorMap = {
-    success: 'text-csuite-success',
-    warning: 'text-csuite-warning',
-    error: 'text-csuite-error',
-    accent: 'text-csuite-accent',
+    success: 'text-aw-success',
+    warning: 'text-aw-warning',
+    error: 'text-aw-error',
+    accent: 'text-aw-accent',
   }
 
   return (
-    <div className="bg-csuite-surface rounded-xl border border-csuite-border p-4">
-      <div className="flex items-center gap-2 text-csuite-muted mb-2">
+    <div className="bg-aw-surface rounded-xl border border-aw-border p-4">
+      <div className="flex items-center gap-2 text-aw-muted mb-2">
         <Icon size={16} />
         <span className="text-sm">{label}</span>
       </div>
@@ -453,10 +453,10 @@ function StatCard({
 
 function StatusBadge({ status }: { status: string }) {
   const styles: Record<string, string> = {
-    in_progress: 'bg-csuite-warning/20 text-csuite-warning',
-    completed: 'bg-csuite-success/20 text-csuite-success',
-    cancelled: 'bg-csuite-error/20 text-csuite-error',
-    pending: 'bg-csuite-muted/20 text-csuite-muted',
+    in_progress: 'bg-aw-warning/20 text-aw-warning',
+    completed: 'bg-aw-success/20 text-aw-success',
+    cancelled: 'bg-aw-error/20 text-aw-error',
+    pending: 'bg-aw-muted/20 text-aw-muted',
   }
 
   return (
@@ -483,9 +483,9 @@ function PipelineDetailModal({
 }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6 w-full max-w-lg">
+      <div className="bg-aw-surface rounded-xl border border-aw-border p-6 w-full max-w-lg">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-csuite-text">{execution.campaign}</h2>
+          <h2 className="text-xl font-semibold text-aw-text">{execution.campaign}</h2>
           <StatusBadge status={execution.status} />
         </div>
 
@@ -495,23 +495,23 @@ function PipelineDetailModal({
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center ${
                   step.status === 'completed'
-                    ? 'bg-csuite-success/20'
+                    ? 'bg-aw-success/20'
                     : step.status === 'in_progress'
-                    ? 'bg-csuite-warning/20'
-                    : 'bg-csuite-card'
+                    ? 'bg-aw-warning/20'
+                    : 'bg-aw-card'
                 }`}
               >
                 {step.status === 'completed' ? (
-                  <CheckCircle size={16} className="text-csuite-success" />
+                  <CheckCircle size={16} className="text-aw-success" />
                 ) : step.status === 'in_progress' ? (
-                  <Clock size={16} className="text-csuite-warning animate-pulse" />
+                  <Clock size={16} className="text-aw-warning animate-pulse" />
                 ) : (
-                  <span className="text-xs text-csuite-muted">{index + 1}</span>
+                  <span className="text-xs text-aw-muted">{index + 1}</span>
                 )}
               </div>
               <div className="flex-1">
-                <p className="text-csuite-text">{formatStepName(step.name)}</p>
-                <p className="text-xs text-csuite-muted">{step.executive}</p>
+                <p className="text-aw-text">{formatStepName(step.name)}</p>
+                <p className="text-xs text-aw-muted">{step.executive}</p>
               </div>
             </div>
           ))}
@@ -520,7 +520,7 @@ function PipelineDetailModal({
         <div className="flex justify-between">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-csuite-card border border-csuite-border text-csuite-text rounded-lg hover:bg-csuite-surface"
+            className="px-4 py-2 bg-aw-card border border-aw-border text-aw-text rounded-lg hover:bg-aw-surface"
           >
             Close
           </button>
@@ -529,14 +529,14 @@ function PipelineDetailModal({
               <>
                 <button
                   onClick={onCancel}
-                  className="flex items-center gap-2 px-4 py-2 text-csuite-error hover:bg-csuite-error/10 rounded-lg"
+                  className="flex items-center gap-2 px-4 py-2 text-aw-error hover:bg-aw-error/10 rounded-lg"
                 >
                   <Square size={16} />
                   Cancel
                 </button>
                 <button
                   onClick={onAdvance}
-                  className="flex items-center gap-2 px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600"
+                  className="flex items-center gap-2 px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600"
                 >
                   <ChevronRight size={16} />
                   Advance Step
@@ -587,27 +587,27 @@ function CreateContentModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6 w-full max-w-lg">
-        <h2 className="text-xl font-semibold text-csuite-text mb-4">Create Content</h2>
+      <div className="bg-aw-surface rounded-xl border border-aw-border p-6 w-full max-w-lg">
+        <h2 className="text-xl font-semibold text-aw-text mb-4">Create Content</h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-csuite-muted mb-1">Title</label>
+            <label className="block text-sm font-medium text-aw-muted mb-1">Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Content title"
-              className="w-full p-3 bg-csuite-card border border-csuite-border rounded-lg text-csuite-text placeholder-csuite-muted focus:outline-none focus:border-csuite-accent"
+              className="w-full p-3 bg-aw-card border border-aw-border rounded-lg text-aw-text placeholder-aw-muted focus:outline-none focus:border-aw-accent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-csuite-muted mb-1">Format</label>
+            <label className="block text-sm font-medium text-aw-muted mb-1">Format</label>
             <select
               value={format}
               onChange={(e) => setFormat(e.target.value)}
-              className="w-full p-3 bg-csuite-card border border-csuite-border rounded-lg text-csuite-text focus:outline-none focus:border-csuite-accent"
+              className="w-full p-3 bg-aw-card border border-aw-border rounded-lg text-aw-text focus:outline-none focus:border-aw-accent"
             >
               <option value="article">Article</option>
               <option value="blog_post">Blog Post</option>
@@ -618,13 +618,13 @@ function CreateContentModal({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-csuite-muted mb-1">Content</label>
+            <label className="block text-sm font-medium text-aw-muted mb-1">Content</label>
             <textarea
               value={body}
               onChange={(e) => setBody(e.target.value)}
               placeholder="Write your content here..."
               rows={6}
-              className="w-full p-3 bg-csuite-card border border-csuite-border rounded-lg text-csuite-text placeholder-csuite-muted resize-none focus:outline-none focus:border-csuite-accent"
+              className="w-full p-3 bg-aw-card border border-aw-border rounded-lg text-aw-text placeholder-aw-muted resize-none focus:outline-none focus:border-aw-accent"
             />
           </div>
         </div>
@@ -632,14 +632,14 @@ function CreateContentModal({
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-csuite-card border border-csuite-border text-csuite-text rounded-lg hover:bg-csuite-surface"
+            className="px-4 py-2 bg-aw-card border border-aw-border text-aw-text rounded-lg hover:bg-aw-surface"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
             disabled={!title.trim() || !body.trim() || isSubmitting}
-            className="px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50"
+            className="px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50"
           >
             {isSubmitting ? 'Creating...' : 'Create'}
           </button>
@@ -697,12 +697,12 @@ function StartPipelineModal({
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6 w-full max-w-lg">
-        <h2 className="text-xl font-semibold text-csuite-text mb-4">Start Content Pipeline</h2>
+      <div className="bg-aw-surface rounded-xl border border-aw-border p-6 w-full max-w-lg">
+        <h2 className="text-xl font-semibold text-aw-text mb-4">Start Content Pipeline</h2>
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-csuite-muted mb-1">
+            <label className="block text-sm font-medium text-aw-muted mb-1">
               Campaign Name
             </label>
             <input
@@ -710,12 +710,12 @@ function StartPipelineModal({
               value={campaign}
               onChange={(e) => setCampaign(e.target.value)}
               placeholder="e.g., Q1 Product Launch"
-              className="w-full p-3 bg-csuite-card border border-csuite-border rounded-lg text-csuite-text placeholder-csuite-muted focus:outline-none focus:border-csuite-accent"
+              className="w-full p-3 bg-aw-card border border-aw-border rounded-lg text-aw-text placeholder-aw-muted focus:outline-none focus:border-aw-accent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-csuite-muted mb-1">
+            <label className="block text-sm font-medium text-aw-muted mb-1">
               Target Audience
             </label>
             <input
@@ -723,12 +723,12 @@ function StartPipelineModal({
               value={audience}
               onChange={(e) => setAudience(e.target.value)}
               placeholder="e.g., Tech founders and developers"
-              className="w-full p-3 bg-csuite-card border border-csuite-border rounded-lg text-csuite-text placeholder-csuite-muted focus:outline-none focus:border-csuite-accent"
+              className="w-full p-3 bg-aw-card border border-aw-border rounded-lg text-aw-text placeholder-aw-muted focus:outline-none focus:border-aw-accent"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-csuite-muted mb-2">
+            <label className="block text-sm font-medium text-aw-muted mb-2">
               Distribution Channels
             </label>
             <div className="flex flex-wrap gap-2">
@@ -738,8 +738,8 @@ function StartPipelineModal({
                   onClick={() => toggleChannel(channel)}
                   className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${
                     channels.includes(channel)
-                      ? 'bg-csuite-accent text-white'
-                      : 'bg-csuite-card text-csuite-muted hover:text-csuite-text'
+                      ? 'bg-aw-accent text-white'
+                      : 'bg-aw-card text-aw-muted hover:text-aw-text'
                   }`}
                 >
                   {channel}
@@ -752,14 +752,14 @@ function StartPipelineModal({
         <div className="flex justify-end gap-3 mt-6">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-csuite-card border border-csuite-border text-csuite-text rounded-lg hover:bg-csuite-surface"
+            className="px-4 py-2 bg-aw-card border border-aw-border text-aw-text rounded-lg hover:bg-aw-surface"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
             disabled={!campaign.trim() || isSubmitting}
-            className="flex items-center gap-2 px-4 py-2 bg-csuite-success text-white rounded-lg hover:bg-green-600 disabled:opacity-50"
+            className="flex items-center gap-2 px-4 py-2 bg-aw-success text-white rounded-lg hover:bg-green-600 disabled:opacity-50"
           >
             <Play size={16} />
             {isSubmitting ? 'Starting...' : 'Start Pipeline'}

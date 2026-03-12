@@ -109,7 +109,7 @@ class AsyncBridge(QObject):
         return future
 
 
-class CSuiteBackend(QObject):
+class AgentBackend(QObject):
     """
     Backend connector for ag3ntwerk Dashboard.
 

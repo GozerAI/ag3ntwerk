@@ -30,8 +30,8 @@ export default function Dashboard() {
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-csuite-text">Command Center</h1>
-        <p className="text-csuite-muted mt-1">Your unified dashboard for all affairs</p>
+        <h1 className="text-3xl font-bold text-aw-text">Command Center</h1>
+        <p className="text-aw-muted mt-1">Your unified dashboard for all affairs</p>
       </div>
 
       {/* Stats Grid */}
@@ -73,15 +73,15 @@ export default function Dashboard() {
       {/* COO Status & Activity Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* COO Status Card */}
-        <div className="lg:col-span-2 bg-csuite-surface rounded-xl border border-csuite-border p-6">
+        <div className="lg:col-span-2 bg-aw-surface rounded-xl border border-aw-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-csuite-text flex items-center gap-2">
-              <Brain size={24} className="text-csuite-accent" />
+            <h2 className="text-xl font-semibold text-aw-text flex items-center gap-2">
+              <Brain size={24} className="text-aw-accent" />
               COO Status
             </h2>
             <Link
               to="/coo"
-              className="text-sm text-csuite-accent hover:underline"
+              className="text-sm text-aw-accent hover:underline"
             >
               View Details →
             </Link>
@@ -107,7 +107,7 @@ export default function Dashboard() {
               />
             </div>
           ) : (
-            <div className="text-center py-8 text-csuite-muted">
+            <div className="text-center py-8 text-aw-muted">
               <Brain size={48} className="mx-auto mb-2 opacity-50" />
               <p>COO not initialized</p>
             </div>
@@ -120,15 +120,15 @@ export default function Dashboard() {
         </div>
 
         {/* Activity Feed */}
-        <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
-          <h2 className="text-xl font-semibold text-csuite-text mb-4">Activity Feed</h2>
+        <div className="bg-aw-surface rounded-xl border border-aw-border p-6">
+          <h2 className="text-xl font-semibold text-aw-text mb-4">Activity Feed</h2>
           <div className="space-y-3 max-h-80 overflow-y-auto">
             {activities.length > 0 ? (
               activities.slice(0, 10).map((activity, i) => (
                 <ActivityItem key={i} activity={activity} />
               ))
             ) : (
-              <p className="text-csuite-muted text-center py-8">
+              <p className="text-aw-muted text-center py-8">
                 No recent activity
               </p>
             )}
@@ -155,25 +155,25 @@ function StatCard({
   color: 'accent' | 'success' | 'warning' | 'error'
 }) {
   const colorMap = {
-    accent: 'text-csuite-accent',
-    success: 'text-csuite-success',
-    warning: 'text-csuite-warning',
-    error: 'text-csuite-error',
+    accent: 'text-aw-accent',
+    success: 'text-aw-success',
+    warning: 'text-aw-warning',
+    error: 'text-aw-error',
   }
 
   return (
     <Link
       to={href}
-      className="bg-csuite-surface rounded-xl border border-csuite-border p-6 hover:border-csuite-accent transition-colors"
+      className="bg-aw-surface rounded-xl border border-aw-border p-6 hover:border-aw-accent transition-colors"
     >
       <div className="flex items-center gap-4">
-        <div className={`p-3 rounded-lg bg-csuite-card ${colorMap[color]}`}>
+        <div className={`p-3 rounded-lg bg-aw-card ${colorMap[color]}`}>
           <Icon size={24} />
         </div>
         <div>
-          <p className="text-3xl font-bold text-csuite-text">{value}</p>
-          <p className="text-sm text-csuite-muted">{label}</p>
-          <p className="text-xs text-csuite-muted mt-1">{subtext}</p>
+          <p className="text-3xl font-bold text-aw-text">{value}</p>
+          <p className="text-sm text-aw-muted">{label}</p>
+          <p className="text-xs text-aw-muted mt-1">{subtext}</p>
         </div>
       </div>
     </Link>
@@ -192,24 +192,24 @@ function COOMetric({
   isState?: boolean
 }) {
   const stateColors: Record<string, string> = {
-    idle: 'text-csuite-muted',
-    observing: 'text-csuite-success',
-    prioritizing: 'text-csuite-accent',
-    delegating: 'text-csuite-warning',
-    executing: 'text-csuite-success',
-    learning: 'text-csuite-accent',
-    waiting_approval: 'text-csuite-warning',
+    idle: 'text-aw-muted',
+    observing: 'text-aw-success',
+    prioritizing: 'text-aw-accent',
+    delegating: 'text-aw-warning',
+    executing: 'text-aw-success',
+    learning: 'text-aw-accent',
+    waiting_approval: 'text-aw-warning',
   }
 
   return (
-    <div className="bg-csuite-card rounded-lg p-4">
-      <div className="flex items-center gap-2 text-csuite-muted mb-1">
+    <div className="bg-aw-card rounded-lg p-4">
+      <div className="flex items-center gap-2 text-aw-muted mb-1">
         <Icon size={16} />
         <span className="text-sm">{label}</span>
       </div>
       <p
         className={`text-lg font-semibold ${
-          isState ? stateColors[value] || 'text-csuite-text' : 'text-csuite-text'
+          isState ? stateColors[value] || 'text-aw-text' : 'text-aw-text'
         }`}
       >
         {value}
@@ -240,8 +240,8 @@ function COOActionButton() {
       onClick={handleClick}
       className={`px-6 py-2 rounded-lg font-medium transition-colors ${
         isRunning
-          ? 'bg-csuite-error hover:bg-red-600 text-white'
-          : 'bg-csuite-success hover:bg-green-600 text-white'
+          ? 'bg-aw-error hover:bg-red-600 text-white'
+          : 'bg-aw-success hover:bg-green-600 text-white'
       }`}
     >
       {isRunning ? 'Stop COO' : 'Start COO'}
@@ -261,22 +261,22 @@ function ActivityItem({ activity }: { activity: { type: string; data: unknown; t
   }
 
   const typeColors: Record<string, string> = {
-    task_created: 'bg-csuite-accent',
-    task_completed: 'bg-csuite-success',
-    goal_created: 'bg-csuite-warning',
-    coo_started: 'bg-csuite-success',
-    coo_stopped: 'bg-csuite-error',
-    connected: 'bg-csuite-muted',
+    task_created: 'bg-aw-accent',
+    task_completed: 'bg-aw-success',
+    goal_created: 'bg-aw-warning',
+    coo_started: 'bg-aw-success',
+    coo_stopped: 'bg-aw-error',
+    connected: 'bg-aw-muted',
   }
 
   return (
     <div className="flex items-center gap-3">
-      <div className={`w-2 h-2 rounded-full ${typeColors[activity.type] || 'bg-csuite-muted'}`} />
+      <div className={`w-2 h-2 rounded-full ${typeColors[activity.type] || 'bg-aw-muted'}`} />
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-csuite-text truncate">
+        <p className="text-sm text-aw-text truncate">
           {typeLabels[activity.type] || activity.type}
         </p>
-        <p className="text-xs text-csuite-muted">
+        <p className="text-xs text-aw-muted">
           {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
         </p>
       </div>

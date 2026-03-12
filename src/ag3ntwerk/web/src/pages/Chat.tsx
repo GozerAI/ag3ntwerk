@@ -102,12 +102,12 @@ export default function Chat() {
   return (
     <div className="h-full flex flex-col">
       {/* Header */}
-      <div className="p-6 border-b border-csuite-border">
+      <div className="p-6 border-b border-aw-border">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-csuite-text">Executive Chat</h1>
-            <p className="text-csuite-muted">
-              Talk to your C-Suite executives
+            <h1 className="text-2xl font-bold text-aw-text">Executive Chat</h1>
+            <p className="text-aw-muted">
+              Talk to your Ag3ntwerk agents
               {!cooReady && ' (COO offline)'}
             </p>
           </div>
@@ -115,18 +115,18 @@ export default function Chat() {
             {/* New Chat button */}
             <button
               onClick={handleNewChat}
-              className="flex items-center gap-1.5 px-3 py-2 text-sm bg-csuite-surface border border-csuite-border rounded-lg text-csuite-text hover:border-csuite-accent/50 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 text-sm bg-aw-surface border border-aw-border rounded-lg text-aw-text hover:border-aw-accent/50 transition-colors"
             >
               <Plus size={16} />
               New Chat
             </button>
             {/* Executive Selector */}
             <div className="flex items-center gap-2">
-              <Users size={20} className="text-csuite-muted" />
+              <Users size={20} className="text-aw-muted" />
               <select
                 value={selectedExecutive}
                 onChange={(e) => setSelectedExecutive(e.target.value)}
-                className="bg-csuite-surface border border-csuite-border rounded-lg px-3 py-2 text-csuite-text"
+                className="bg-aw-surface border border-aw-border rounded-lg px-3 py-2 text-aw-text"
               >
                 {EXECUTIVES.map((exec) => (
                   <option key={exec.code} value={exec.code}>
@@ -144,11 +144,11 @@ export default function Chat() {
         <div className="max-w-3xl mx-auto space-y-6">
           {messages.length === 0 && (
             <div className="text-center py-12">
-              <Bot size={48} className="mx-auto mb-4 text-csuite-muted opacity-50" />
-              <h2 className="text-xl font-semibold text-csuite-text mb-2">
-                Welcome to C-Suite Chat
+              <Bot size={48} className="mx-auto mb-4 text-aw-muted opacity-50" />
+              <h2 className="text-xl font-semibold text-aw-text mb-2">
+                Welcome to Ag3ntwerk Chat
               </h2>
-              <p className="text-csuite-muted mb-4">
+              <p className="text-aw-muted mb-4">
                 Select an executive and start a conversation.
               </p>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-w-lg mx-auto">
@@ -158,12 +158,12 @@ export default function Chat() {
                     onClick={() => setSelectedExecutive(exec.code)}
                     className={`p-3 rounded-lg border text-left transition-colors ${
                       selectedExecutive === exec.code
-                        ? 'border-csuite-accent bg-csuite-accent/10'
-                        : 'border-csuite-border bg-csuite-surface hover:border-csuite-accent/50'
+                        ? 'border-aw-accent bg-aw-accent/10'
+                        : 'border-aw-border bg-aw-surface hover:border-aw-accent/50'
                     }`}
                   >
-                    <p className="font-medium text-csuite-text text-sm">{exec.code}</p>
-                    <p className="text-xs text-csuite-muted">{exec.description}</p>
+                    <p className="font-medium text-aw-text text-sm">{exec.code}</p>
+                    <p className="text-xs text-aw-muted">{exec.description}</p>
                   </button>
                 ))}
               </div>
@@ -179,7 +179,7 @@ export default function Chat() {
             >
               {message.role === 'assistant' && (
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-                  message.error ? 'bg-csuite-error' : 'bg-csuite-accent'
+                  message.error ? 'bg-aw-error' : 'bg-aw-accent'
                 }`}>
                   <Bot size={20} className="text-white" />
                 </div>
@@ -193,10 +193,10 @@ export default function Chat() {
                 <div
                   className={`inline-block rounded-2xl px-4 py-3 ${
                     message.role === 'user'
-                      ? 'bg-csuite-accent text-white'
+                      ? 'bg-aw-accent text-white'
                       : message.error
-                      ? 'bg-csuite-error/10 border border-csuite-error/30 text-csuite-text'
-                      : 'bg-csuite-surface border border-csuite-border text-csuite-text'
+                      ? 'bg-aw-error/10 border border-aw-error/30 text-aw-text'
+                      : 'bg-aw-surface border border-aw-border text-aw-text'
                   }`}
                 >
                   <p className="whitespace-pre-wrap">{message.content}</p>
@@ -204,15 +204,15 @@ export default function Chat() {
 
                 {/* Executive badge for assistant messages */}
                 {message.role === 'assistant' && message.executive && (
-                  <div className="mt-2 text-xs text-csuite-muted">
+                  <div className="mt-2 text-xs text-aw-muted">
                     via {message.executive}
                   </div>
                 )}
               </div>
 
               {message.role === 'user' && (
-                <div className="w-10 h-10 rounded-full bg-csuite-card flex items-center justify-center flex-shrink-0">
-                  <User size={20} className="text-csuite-text" />
+                <div className="w-10 h-10 rounded-full bg-aw-card flex items-center justify-center flex-shrink-0">
+                  <User size={20} className="text-aw-text" />
                 </div>
               )}
             </div>
@@ -220,14 +220,14 @@ export default function Chat() {
 
           {loading && (
             <div className="flex gap-4">
-              <div className="w-10 h-10 rounded-full bg-csuite-accent flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-aw-accent flex items-center justify-center">
                 <Loader2 size={20} className="text-white animate-spin" />
               </div>
-              <div className="bg-csuite-surface border border-csuite-border rounded-2xl px-4 py-3">
+              <div className="bg-aw-surface border border-aw-border rounded-2xl px-4 py-3">
                 <div className="flex gap-1">
-                  <span className="w-2 h-2 bg-csuite-muted rounded-full animate-bounce" />
-                  <span className="w-2 h-2 bg-csuite-muted rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                  <span className="w-2 h-2 bg-csuite-muted rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  <span className="w-2 h-2 bg-aw-muted rounded-full animate-bounce" />
+                  <span className="w-2 h-2 bg-aw-muted rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                  <span className="w-2 h-2 bg-aw-muted rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
                 </div>
               </div>
             </div>
@@ -238,7 +238,7 @@ export default function Chat() {
       </div>
 
       {/* Input */}
-      <div className="p-6 border-t border-csuite-border">
+      <div className="p-6 border-t border-aw-border">
         <div className="max-w-3xl mx-auto flex gap-3">
           <input
             type="text"
@@ -247,12 +247,12 @@ export default function Chat() {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
             disabled={loading}
-            className="flex-1 bg-csuite-surface border border-csuite-border rounded-xl px-4 py-3 text-csuite-text placeholder:text-csuite-muted disabled:opacity-50"
+            className="flex-1 bg-aw-surface border border-aw-border rounded-xl px-4 py-3 text-aw-text placeholder:text-aw-muted disabled:opacity-50"
           />
           <button
             onClick={handleSend}
             disabled={loading || !input.trim()}
-            className="px-6 py-3 bg-csuite-accent text-white rounded-xl hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="px-6 py-3 bg-aw-accent text-white rounded-xl hover:bg-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
             <Send size={20} />
           </button>

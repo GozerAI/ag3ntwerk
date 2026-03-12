@@ -44,7 +44,7 @@ class MilvusStore(VectorStore):
         store = MilvusStore(
             host="localhost",
             port=19530,
-            collection_name="csuite_knowledge",
+            collection_name="ag3ntwerk_knowledge",
             embedding_provider=OllamaEmbeddingProvider(),
         )
         await store.initialize()
@@ -67,7 +67,7 @@ class MilvusStore(VectorStore):
         self,
         host: str = "localhost",
         port: int = 19530,
-        collection_name: str = "csuite_vectors",
+        collection_name: str = "ag3ntwerk_vectors",
         embedding_provider: Optional[EmbeddingProvider] = None,
         embedding_dimension: int = 768,
         distance_metric: DistanceMetric = DistanceMetric.COSINE,

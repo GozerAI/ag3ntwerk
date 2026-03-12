@@ -48,7 +48,7 @@ class TaskService:
         priority: str,
         context: Dict[str, Any],
     ):
-        from ag3ntwerk.core.base import Task as CSuiteTask, TaskPriority
+        from ag3ntwerk.core.base import Task as AgentTask, TaskPriority
 
         priority_map = {
             "low": TaskPriority.LOW,
@@ -58,7 +58,7 @@ class TaskService:
         }
 
         try:
-            csuite_task = CSuiteTask(
+            agent_task = AgentTask(
                 description=description,
                 task_type=task_type,
                 priority=priority_map.get(priority.lower(), TaskPriority.MEDIUM),
@@ -68,7 +68,7 @@ class TaskService:
             task_dict["status"] = "running"
             await self._state.broadcast("task_updated", task_dict)
 
-            result = await self._state.coo.execute(csuite_task)
+            result = await self._state.coo.execute(agent_task)
 
             task_dict["status"] = "completed" if result.success else "failed"
             output = result.output
@@ -148,14 +148,14 @@ class ChatService:
                     "conversation_id": conversation_id,
                 }
 
-            from ag3ntwerk.core.base import Task as CSuiteTask, TaskPriority
+            from ag3ntwerk.core.base import Task as AgentTask, TaskPriority
 
             context: Dict[str, Any] = {}
             context["_conversation_history"] = history
 
             context["_organizational_context"] = self._build_org_context(agent_code.upper())
 
-            task = CSuiteTask(
+            task = AgentTask(
                 description=message,
                 task_type="chat",
                 priority=TaskPriority.MEDIUM,

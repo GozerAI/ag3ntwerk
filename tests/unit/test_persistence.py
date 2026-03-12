@@ -445,7 +445,7 @@ class TestDatabaseConfig:
             backend=DatabaseBackend.POSTGRESQL,
             pg_host="db.example.com",
             pg_port=5432,
-            pg_database="csuite_prod",
+            pg_database="ag3ntwerk_prod",
             pg_user="admin",
             pg_password="s3cret!@#",
         )
@@ -454,7 +454,7 @@ class TestDatabaseConfig:
         assert "***" in safe
         assert "admin" in safe
         assert "db.example.com" in safe
-        assert "csuite_prod" in safe
+        assert "ag3ntwerk_prod" in safe
 
     def test_safe_connection_string_sqlite(self, tmp_path):
         """Test that safe_connection_string for SQLite is unchanged."""
@@ -477,7 +477,7 @@ class TestDatabaseConfig:
             backend=DatabaseBackend.POSTGRESQL,
             pg_host="db.example.com",
             pg_port=5432,
-            pg_database="csuite_prod",
+            pg_database="ag3ntwerk_prod",
             pg_user="admin",
             pg_password="s3cret!@#",
         )

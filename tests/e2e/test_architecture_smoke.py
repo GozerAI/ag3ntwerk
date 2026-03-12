@@ -189,13 +189,13 @@ class TestRegistryIntegration:
 class TestInitializationFactory:
     """Test initialization factory updates."""
 
-    def test_csuite_system_has_cos(self):
-        """Test CSuiteSystem has cos attribute."""
-        from ag3ntwerk.initialization import CSuiteSystem
+    def test_agent_system_has_cos(self):
+        """Test AgentSystem has cos attribute."""
+        from ag3ntwerk.initialization import AgentSystem
         from ag3ntwerk.agents.overwatch import Overwatch
 
         cos = Overwatch()
-        system = CSuiteSystem(cos=cos)
+        system = AgentSystem(cos=cos)
 
         assert system.cos is cos
         assert system.coo is cos  # backward compat

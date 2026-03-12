@@ -44,7 +44,7 @@ class QdrantStore(VectorStore):
         store = QdrantStore(
             host="localhost",
             port=6333,
-            collection_name="csuite_knowledge",
+            collection_name="ag3ntwerk_knowledge",
             embedding_provider=OllamaEmbeddingProvider(),
         )
         await store.initialize()
@@ -68,7 +68,7 @@ class QdrantStore(VectorStore):
         host: str = "localhost",
         port: int = 6333,
         grpc_port: int = 6334,
-        collection_name: str = "csuite_vectors",
+        collection_name: str = "ag3ntwerk_vectors",
         embedding_provider: Optional[EmbeddingProvider] = None,
         embedding_dimension: int = 768,
         distance_metric: DistanceMetric = DistanceMetric.COSINE,

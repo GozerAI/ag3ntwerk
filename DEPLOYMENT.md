@@ -35,7 +35,7 @@ Comprehensive deployment documentation for the ag3ntwerk AI Agent Platform.
 
 ```bash
 # Clone and install
-cd F:\Projects\ag3ntwerk
+cd /path/to/ag3ntwerk
 pip install -e ".[dev]"
 
 # Start the API server (SQLite, Ollama on localhost)
@@ -53,7 +53,7 @@ The server starts at `http://localhost:3737` with:
 ### With Docker Compose
 
 ```bash
-cd F:\Projects\ag3ntwerk
+cd /path/to/ag3ntwerk
 
 # Copy and edit environment file
 cp .env.example .env

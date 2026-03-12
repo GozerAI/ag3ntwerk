@@ -8,7 +8,7 @@ export default {
     extend: {
       colors: {
         // ag3ntwerk agent color palette
-        'ag3ntwerk': {
+        'aw': {
           'bg': '#0f0f13',
           'surface': '#1a1a24',
           'card': '#22222e',

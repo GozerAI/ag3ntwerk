@@ -37,11 +37,11 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex">
       {/* Sidebar */}
-      <aside className="w-64 bg-csuite-surface border-r border-csuite-border flex flex-col">
+      <aside className="w-64 bg-aw-surface border-r border-aw-border flex flex-col">
         {/* Logo */}
-        <div className="p-6 border-b border-csuite-border">
-          <h1 className="text-xl font-bold text-csuite-text">C-Suite</h1>
-          <p className="text-sm text-csuite-muted">Command Center</p>
+        <div className="p-6 border-b border-aw-border">
+          <h1 className="text-xl font-bold text-aw-text">Ag3ntwerk</h1>
+          <p className="text-sm text-aw-muted">Command Center</p>
         </div>
 
         {/* Navigation */}
@@ -54,8 +54,8 @@ export default function Layout() {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors ${
                       isActive
-                        ? 'bg-csuite-accent text-white'
-                        : 'text-csuite-muted hover:text-csuite-text hover:bg-csuite-card'
+                        ? 'bg-aw-accent text-white'
+                        : 'text-aw-muted hover:text-aw-text hover:bg-aw-card'
                     }`
                   }
                 >
@@ -68,18 +68,18 @@ export default function Layout() {
         </nav>
 
         {/* Status footer */}
-        <div className="p-4 border-t border-csuite-border space-y-3">
+        <div className="p-4 border-t border-aw-border space-y-3">
           {/* Connection status */}
           <div className="flex items-center gap-2 text-sm">
             {connected ? (
               <>
-                <Wifi size={16} className="text-csuite-success" />
-                <span className="text-csuite-success">Connected</span>
+                <Wifi size={16} className="text-aw-success" />
+                <span className="text-aw-success">Connected</span>
               </>
             ) : (
               <>
-                <WifiOff size={16} className="text-csuite-error" />
-                <span className="text-csuite-error">Disconnected</span>
+                <WifiOff size={16} className="text-aw-error" />
+                <span className="text-aw-error">Disconnected</span>
               </>
             )}
           </div>
@@ -88,10 +88,10 @@ export default function Layout() {
           <div className="flex items-center gap-2 text-sm">
             <div
               className={`w-2 h-2 rounded-full ${
-                cooRunning ? 'bg-csuite-success animate-pulse' : 'bg-csuite-muted'
+                cooRunning ? 'bg-aw-success animate-pulse' : 'bg-aw-muted'
               }`}
             />
-            <span className="text-csuite-muted">
+            <span className="text-aw-muted">
               COO: {cooRunning ? 'Running' : 'Idle'}
             </span>
           </div>
@@ -99,7 +99,7 @@ export default function Layout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 bg-csuite-bg overflow-auto">
+      <main className="flex-1 bg-aw-bg overflow-auto">
         <Outlet />
       </main>
     </div>
