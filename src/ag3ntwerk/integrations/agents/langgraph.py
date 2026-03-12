@@ -544,7 +544,7 @@ class MockGraph:
             current_node_id = next_node_id
 
 
-class AgentWorkflowBuilder:
+class AgentWerkWorkflowBuilder:
     """
     Helper class to build common ag3ntwerk workflow patterns.
 

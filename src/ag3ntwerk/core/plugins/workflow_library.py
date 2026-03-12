@@ -9,7 +9,6 @@ and provides async read-only access to the workflow library.
 """
 
 import json
-import os
 import logging
 from typing import Any, Dict, List, Optional
 
@@ -21,7 +20,7 @@ from ag3ntwerk.core.plugins._utils import hook
 logger = logging.getLogger(__name__)
 
 # Default connection string — overridden via plugin config
-DEFAULT_DSN = os.environ.get("WORKFLOW_DB_DSN", "postgresql://localhost:5435/workflow_library")
+DEFAULT_DSN = "postgresql://harvester:harvester_dev_password@localhost:5435/workflow_library"
 DEFAULT_OLLAMA_URL = "http://localhost:11434"
 EMBED_MODEL = "nomic-embed-text"
 

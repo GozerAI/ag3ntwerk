@@ -78,17 +78,17 @@ export default function COO() {
         <div className="flex items-center gap-4">
           <div
             className={`p-4 rounded-xl ${
-              isRunning ? 'bg-aw-success/20' : 'bg-aw-card'
+              isRunning ? 'bg-csuite-success/20' : 'bg-csuite-card'
             }`}
           >
             <Brain
               size={32}
-              className={isRunning ? 'text-aw-success' : 'text-aw-muted'}
+              className={isRunning ? 'text-csuite-success' : 'text-csuite-muted'}
             />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-aw-text">Autonomous COO</h1>
-            <p className="text-aw-muted mt-1">
+            <h1 className="text-3xl font-bold text-csuite-text">Autonomous COO</h1>
+            <p className="text-csuite-muted mt-1">
               {isRunning ? 'Running' : 'Idle'} • Mode: {cooStatus?.mode || 'unknown'}
             </p>
           </div>
@@ -98,8 +98,8 @@ export default function COO() {
           onClick={isRunning ? stopCOO : startCOO}
           className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
             isRunning
-              ? 'bg-aw-error hover:bg-red-600 text-white'
-              : 'bg-aw-success hover:bg-green-600 text-white'
+              ? 'bg-csuite-error hover:bg-red-600 text-white'
+              : 'bg-csuite-success hover:bg-green-600 text-white'
           }`}
         >
           {isRunning ? (
@@ -144,8 +144,8 @@ export default function COO() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Mode Selection */}
-        <div className="bg-aw-surface rounded-xl border border-aw-border p-6">
-          <h2 className="text-xl font-semibold text-aw-text mb-4">Operating Mode</h2>
+        <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+          <h2 className="text-xl font-semibold text-csuite-text mb-4">Operating Mode</h2>
           <div className="space-y-3">
             {modes.map(({ value, label, icon: Icon, description }) => (
               <button
@@ -153,29 +153,29 @@ export default function COO() {
                 onClick={() => setCOOMode(value)}
                 className={`w-full flex items-center gap-4 p-4 rounded-lg border transition-colors ${
                   cooStatus?.mode === value
-                    ? 'border-aw-accent bg-aw-accent/10'
-                    : 'border-aw-border hover:border-aw-muted'
+                    ? 'border-csuite-accent bg-csuite-accent/10'
+                    : 'border-csuite-border hover:border-csuite-muted'
                 }`}
               >
                 <Icon
                   size={24}
                   className={
                     cooStatus?.mode === value
-                      ? 'text-aw-accent'
-                      : 'text-aw-muted'
+                      ? 'text-csuite-accent'
+                      : 'text-csuite-muted'
                   }
                 />
                 <div className="text-left">
                   <p
                     className={`font-medium ${
                       cooStatus?.mode === value
-                        ? 'text-aw-accent'
-                        : 'text-aw-text'
+                        ? 'text-csuite-accent'
+                        : 'text-csuite-text'
                     }`}
                   >
                     {label}
                   </p>
-                  <p className="text-sm text-aw-muted">{description}</p>
+                  <p className="text-sm text-csuite-muted">{description}</p>
                 </div>
               </button>
             ))}
@@ -183,50 +183,50 @@ export default function COO() {
         </div>
 
         {/* Suggestions */}
-        <div className="bg-aw-surface rounded-xl border border-aw-border p-6">
+        <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-aw-text">Next Suggestion</h2>
+            <h2 className="text-xl font-semibold text-csuite-text">Next Suggestion</h2>
             <button
               onClick={fetchSuggestions}
               disabled={loadingSuggestions}
-              className="text-sm text-aw-accent hover:underline disabled:opacity-50"
+              className="text-sm text-csuite-accent hover:underline disabled:opacity-50"
             >
               {loadingSuggestions ? 'Loading...' : 'Refresh'}
             </button>
           </div>
 
           {suggestions?.suggestion ? (
-            <div className="bg-aw-card rounded-lg p-4">
-              <h3 className="font-medium text-aw-text mb-2">
+            <div className="bg-csuite-card rounded-lg p-4">
+              <h3 className="font-medium text-csuite-text mb-2">
                 {suggestions.suggestion.item?.title || 'Unnamed task'}
               </h3>
               <div className="grid grid-cols-2 gap-4 text-sm mb-4">
                 <div>
-                  <span className="text-aw-muted">Executor:</span>
-                  <span className="ml-2 text-aw-text">
+                  <span className="text-csuite-muted">Executor:</span>
+                  <span className="ml-2 text-csuite-text">
                     {suggestions.decision?.executor || 'unknown'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-aw-muted">Confidence:</span>
-                  <span className="ml-2 text-aw-text">
+                  <span className="text-csuite-muted">Confidence:</span>
+                  <span className="ml-2 text-csuite-text">
                     {((suggestions.decision?.confidence || 0) * 100).toFixed(0)}%
                   </span>
                 </div>
               </div>
-              <p className="text-sm text-aw-muted mb-4">
+              <p className="text-sm text-csuite-muted mb-4">
                 {suggestions.decision?.reason}
               </p>
               <div className="flex gap-3">
                 <button
                   onClick={executeSuggestion}
-                  className="flex-1 px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600"
+                  className="flex-1 px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600"
                 >
                   Execute Now
                 </button>
                 <button
                   onClick={skipSuggestion}
-                  className="px-4 py-2 bg-aw-card border border-aw-border text-aw-text rounded-lg hover:bg-aw-surface"
+                  className="px-4 py-2 bg-csuite-card border border-csuite-border text-csuite-text rounded-lg hover:bg-csuite-surface"
                 >
                   Skip
                 </button>
@@ -234,8 +234,8 @@ export default function COO() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <Gauge size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
-              <p className="text-aw-muted">
+              <Gauge size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
+              <p className="text-csuite-muted">
                 {suggestions?.reason || 'Click refresh to get suggestions'}
               </p>
             </div>
@@ -243,24 +243,24 @@ export default function COO() {
 
           {/* Context summary */}
           {suggestions?.context_summary && (
-            <div className="mt-4 pt-4 border-t border-aw-border">
-              <h4 className="text-sm font-medium text-aw-muted mb-2">Context</h4>
+            <div className="mt-4 pt-4 border-t border-csuite-border">
+              <h4 className="text-sm font-medium text-csuite-muted mb-2">Context</h4>
               <div className="grid grid-cols-3 gap-4 text-sm">
                 <div>
-                  <span className="text-aw-muted">Goals:</span>
-                  <span className="ml-2 text-aw-text">
+                  <span className="text-csuite-muted">Goals:</span>
+                  <span className="ml-2 text-csuite-text">
                     {suggestions.context_summary.active_goals}
                   </span>
                 </div>
                 <div>
-                  <span className="text-aw-muted">Tasks:</span>
-                  <span className="ml-2 text-aw-text">
+                  <span className="text-csuite-muted">Tasks:</span>
+                  <span className="ml-2 text-csuite-text">
                     {suggestions.context_summary.pending_tasks}
                   </span>
                 </div>
                 <div>
-                  <span className="text-aw-muted">Blockers:</span>
-                  <span className="ml-2 text-aw-text">
+                  <span className="text-csuite-muted">Blockers:</span>
+                  <span className="ml-2 text-csuite-text">
                     {suggestions.context_summary.blockers}
                   </span>
                 </div>
@@ -272,11 +272,11 @@ export default function COO() {
 
       {/* Pending Approvals */}
       {cooStatus && (cooStatus.pending_approvals || 0) > 0 && (
-        <div className="mt-6 bg-aw-surface rounded-xl border border-aw-border p-6">
-          <h2 className="text-xl font-semibold text-aw-text mb-4">
+        <div className="mt-6 bg-csuite-surface rounded-xl border border-csuite-border p-6">
+          <h2 className="text-xl font-semibold text-csuite-text mb-4">
             Pending Approvals ({cooStatus.pending_approvals})
           </h2>
-          <p className="text-aw-muted">
+          <p className="text-csuite-muted">
             Approval requests will appear here when the COO needs your decision.
           </p>
         </div>
@@ -299,32 +299,32 @@ function StatCard({
   isState?: boolean
 }) {
   const stateColors: Record<string, string> = {
-    idle: 'text-aw-muted',
-    observing: 'text-aw-success',
-    prioritizing: 'text-aw-accent',
-    delegating: 'text-aw-warning',
-    executing: 'text-aw-success',
-    learning: 'text-aw-accent',
-    waiting_approval: 'text-aw-warning',
-    not_available: 'text-aw-error',
-    unknown: 'text-aw-muted',
+    idle: 'text-csuite-muted',
+    observing: 'text-csuite-success',
+    prioritizing: 'text-csuite-accent',
+    delegating: 'text-csuite-warning',
+    executing: 'text-csuite-success',
+    learning: 'text-csuite-accent',
+    waiting_approval: 'text-csuite-warning',
+    not_available: 'text-csuite-error',
+    unknown: 'text-csuite-muted',
   }
 
   const colorMap = {
-    success: 'text-aw-success',
-    warning: 'text-aw-warning',
-    error: 'text-aw-error',
+    success: 'text-csuite-success',
+    warning: 'text-csuite-warning',
+    error: 'text-csuite-error',
   }
 
   const valueColor = isState
-    ? stateColors[value] || 'text-aw-text'
+    ? stateColors[value] || 'text-csuite-text'
     : color
     ? colorMap[color]
-    : 'text-aw-text'
+    : 'text-csuite-text'
 
   return (
-    <div className="bg-aw-surface rounded-xl border border-aw-border p-4">
-      <div className="flex items-center gap-2 text-aw-muted mb-2">
+    <div className="bg-csuite-surface rounded-xl border border-csuite-border p-4">
+      <div className="flex items-center gap-2 text-csuite-muted mb-2">
         <Icon size={16} />
         <span className="text-sm">{label}</span>
       </div>

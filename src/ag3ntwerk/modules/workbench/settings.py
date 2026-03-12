@@ -76,7 +76,7 @@ class IDESettings:
 class DockerSettings:
     """Docker-specific settings."""
 
-    network_name: str = "ag3ntwerk_workbench_net"
+    network_name: str = "agentwerk_workbench_net"
     """Docker network name for workbench containers."""
 
     image_prefix: str = "ag3ntwerk-workbench"

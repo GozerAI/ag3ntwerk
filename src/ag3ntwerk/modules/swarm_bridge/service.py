@@ -91,8 +91,8 @@ class SwarmBridgeService:
             "timeout": timeout,
             "metadata": {
                 **(metadata or {}),
-                "ag3ntwerk_agent": agent_code,
-                "source": "ag3ntwerk_bridge",
+                "agentwerk_agent": agent_code,
+                "source": "agentwerk_bridge",
             },
         }
 
@@ -163,7 +163,7 @@ class SwarmBridgeService:
             return
 
         try:
-            agent_code = result.get("metadata", {}).get("ag3ntwerk_agent", "")
+            agent_code = result.get("metadata", {}).get("agentwerk_agent", "")
             if not agent_code:
                 return
 

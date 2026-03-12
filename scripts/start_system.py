@@ -84,7 +84,7 @@ def check_dependencies():
     return True
 
 
-def check_ag3ntwerk_imports():
+def check_agentwerk_imports():
     """Check ag3ntwerk modules can be imported."""
     try:
         from ag3ntwerk.api.app import app
@@ -453,7 +453,7 @@ async def main():
     checks = [
         ("Python version", check_python_version),
         ("Dependencies", check_dependencies),
-        ("ag3ntwerk modules", check_ag3ntwerk_imports),
+        ("ag3ntwerk modules", check_agentwerk_imports),
         ("Environment", check_environment),
     ]
 

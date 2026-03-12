@@ -29,8 +29,8 @@ services:
       - PG_PORT=5432
       - PG_DATABASE=ag3ntwerk
       - PG_USER=ag3ntwerk
-      - PG_PASSWORD=${PG_PASSWORD:-ag3ntwerk_dev_password}
-      - REDIS_URL=redis://:${REDIS_PASSWORD:-ag3ntwerk_dev_redis}@redis:6379
+      - PG_PASSWORD=${PG_PASSWORD:-agentwerk_dev_password}
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-agentwerk_dev_redis}@redis:6379
       - OLLAMA_HOST=http://ollama:11434
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
       - AGENTWERK_USE_MIGRATIONS=true
@@ -83,7 +83,7 @@ services:
     container_name: ag3ntwerk-nexus
     environment:
       - AGENTWERK_SERVICE=nexus
-      - REDIS_URL=redis://:${REDIS_PASSWORD:-ag3ntwerk_dev_redis}@redis:6379
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-agentwerk_dev_redis}@redis:6379
       - OLLAMA_HOST=http://ollama:11434
       - CHANNEL_PREFIX=ag3ntwerk:nexus
     depends_on:
@@ -106,7 +106,7 @@ services:
     container_name: ag3ntwerk-forge
     environment:
       - AGENTWERK_SERVICE=forge
-      - REDIS_URL=redis://:${REDIS_PASSWORD:-ag3ntwerk_dev_redis}@redis:6379
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-agentwerk_dev_redis}@redis:6379
       - OLLAMA_HOST=http://ollama:11434
       - CHANNEL_PREFIX=ag3ntwerk:forge
     # Docker socket mount removed for security (grants full host root access).
@@ -131,7 +131,7 @@ services:
     container_name: ag3ntwerk-sentinel
     environment:
       - AGENTWERK_SERVICE=sentinel
-      - REDIS_URL=redis://:${REDIS_PASSWORD:-ag3ntwerk_dev_redis}@redis:6379
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-agentwerk_dev_redis}@redis:6379
       - OLLAMA_HOST=http://ollama:11434
       - CHANNEL_PREFIX=ag3ntwerk:sentinel
     depends_on:
@@ -152,7 +152,7 @@ services:
     environment:
       - POSTGRES_DB=ag3ntwerk
       - POSTGRES_USER=ag3ntwerk
-      - POSTGRES_PASSWORD=${PG_PASSWORD:-ag3ntwerk_dev_password}
+      - POSTGRES_PASSWORD=${PG_PASSWORD:-agentwerk_dev_password}
     volumes:
       - postgres-data:/var/lib/postgresql/data
     ports:
@@ -172,13 +172,13 @@ services:
   redis:
     image: redis:7-alpine
     container_name: ag3ntwerk-redis
-    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-ag3ntwerk_dev_redis}
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-agentwerk_dev_redis}
     volumes:
       - redis-data:/data
     ports:
       - "127.0.0.1:6379:6379"
     healthcheck:
-      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-ag3ntwerk_dev_redis}", "ping"]
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-agentwerk_dev_redis}", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5

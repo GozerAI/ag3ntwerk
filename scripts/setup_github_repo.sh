@@ -4,7 +4,7 @@
 
 set -e
 
-PROJECT_PATH="$(cd "$(dirname "$0")/.." && pwd)"
+PROJECT_PATH="F:/Projects/ag3ntwerk"
 REPO_NAME="ag3ntwerk"
 REPO_DESCRIPTION="ag3ntwerk: Hierarchical AI Agent Orchestration Platform"
 

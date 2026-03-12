@@ -51,15 +51,15 @@ export default function Tasks() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-aw-text">Tasks</h1>
-          <p className="text-aw-muted mt-1">
+          <h1 className="text-3xl font-bold text-csuite-text">Tasks</h1>
+          <p className="text-csuite-muted mt-1">
             {activeTasks.length} active, {completedTasks.length} completed
             {!cooReady && ' (COO offline - tasks won\'t execute)'}
           </p>
         </div>
         <button
           onClick={() => setShowCreate(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600 transition-colors"
+          className="flex items-center gap-2 px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600 transition-colors"
         >
           <Plus size={20} />
           New Task
@@ -69,22 +69,22 @@ export default function Tasks() {
       {/* Create Task Modal */}
       {showCreate && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-aw-surface rounded-xl border border-aw-border p-6 w-full max-w-lg">
-            <h2 className="text-xl font-semibold text-aw-text mb-4">Create Task</h2>
+          <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6 w-full max-w-lg">
+            <h2 className="text-xl font-semibold text-csuite-text mb-4">Create Task</h2>
             <textarea
               placeholder="Describe what you want to accomplish..."
               value={newDescription}
               onChange={(e) => setNewDescription(e.target.value)}
-              className="w-full bg-aw-card border border-aw-border rounded-lg px-4 py-3 text-aw-text mb-3 h-32 resize-none"
+              className="w-full bg-csuite-card border border-csuite-border rounded-lg px-4 py-3 text-csuite-text mb-3 h-32 resize-none"
               autoFocus
             />
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div>
-                <label className="block text-sm text-aw-muted mb-1">Task Type</label>
+                <label className="block text-sm text-csuite-muted mb-1">Task Type</label>
                 <select
                   value={newTaskType}
                   onChange={(e) => setNewTaskType(e.target.value)}
-                  className="w-full bg-aw-card border border-aw-border rounded-lg px-4 py-2 text-aw-text"
+                  className="w-full bg-csuite-card border border-csuite-border rounded-lg px-4 py-2 text-csuite-text"
                 >
                   {TASK_TYPES.map((t) => (
                     <option key={t.value} value={t.value}>{t.label}</option>
@@ -92,11 +92,11 @@ export default function Tasks() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-aw-muted mb-1">Priority</label>
+                <label className="block text-sm text-csuite-muted mb-1">Priority</label>
                 <select
                   value={newPriority}
                   onChange={(e) => setNewPriority(e.target.value)}
-                  className="w-full bg-aw-card border border-aw-border rounded-lg px-4 py-2 text-aw-text"
+                  className="w-full bg-csuite-card border border-csuite-border rounded-lg px-4 py-2 text-csuite-text"
                 >
                   <option value="low">Low</option>
                   <option value="medium">Medium</option>
@@ -106,14 +106,14 @@ export default function Tasks() {
               </div>
             </div>
             {!cooReady && (
-              <div className="mb-4 p-3 bg-aw-warning/10 border border-aw-warning/30 rounded-lg text-sm text-aw-warning">
+              <div className="mb-4 p-3 bg-csuite-warning/10 border border-csuite-warning/30 rounded-lg text-sm text-csuite-warning">
                 COO is not connected. Task will be created but won't execute automatically.
               </div>
             )}
             <div className="flex gap-3 justify-end">
               <button
                 onClick={() => setShowCreate(false)}
-                className="px-4 py-2 text-aw-muted hover:text-aw-text"
+                className="px-4 py-2 text-csuite-muted hover:text-csuite-text"
                 disabled={creating}
               >
                 Cancel
@@ -121,7 +121,7 @@ export default function Tasks() {
               <button
                 onClick={handleCreate}
                 disabled={creating || !newDescription.trim()}
-                className="px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50 flex items-center gap-2"
               >
                 {creating && <Loader2 size={16} className="animate-spin" />}
                 {creating ? 'Creating...' : 'Create & Execute'}
@@ -133,18 +133,18 @@ export default function Tasks() {
 
       {/* Active Tasks */}
       <section className="mb-8">
-        <h2 className="text-lg font-semibold text-aw-text mb-4">Active Tasks</h2>
+        <h2 className="text-lg font-semibold text-csuite-text mb-4">Active Tasks</h2>
         <div className="space-y-3">
           {activeTasks.length > 0 ? (
             activeTasks.map((task) => (
               <TaskCard key={task.id} task={task} />
             ))
           ) : (
-            <div className="bg-aw-surface rounded-xl border border-aw-border p-8 text-center">
-              <p className="text-aw-muted">No active tasks</p>
+            <div className="bg-csuite-surface rounded-xl border border-csuite-border p-8 text-center">
+              <p className="text-csuite-muted">No active tasks</p>
               <button
                 onClick={() => setShowCreate(true)}
-                className="mt-2 text-aw-accent hover:underline"
+                className="mt-2 text-csuite-accent hover:underline"
               >
                 Create your first task
               </button>
@@ -156,7 +156,7 @@ export default function Tasks() {
       {/* Completed Tasks */}
       {completedTasks.length > 0 && (
         <section className="mb-8">
-          <h2 className="text-lg font-semibold text-aw-text mb-4">Completed</h2>
+          <h2 className="text-lg font-semibold text-csuite-text mb-4">Completed</h2>
           <div className="space-y-3">
             {completedTasks.slice(0, 10).map((task) => (
               <TaskCard key={task.id} task={task} />
@@ -168,7 +168,7 @@ export default function Tasks() {
       {/* Failed Tasks */}
       {failedTasks.length > 0 && (
         <section>
-          <h2 className="text-lg font-semibold text-aw-text mb-4">Failed</h2>
+          <h2 className="text-lg font-semibold text-csuite-text mb-4">Failed</h2>
           <div className="space-y-3">
             {failedTasks.slice(0, 5).map((task) => (
               <TaskCard key={task.id} task={task} />
@@ -192,54 +192,54 @@ function TaskCard({ task }: { task: {
   const [expanded, setExpanded] = useState(false)
 
   const priorityColors: Record<string, string> = {
-    low: 'border-l-aw-muted',
-    medium: 'border-l-aw-accent',
-    high: 'border-l-aw-warning',
-    critical: 'border-l-aw-error',
+    low: 'border-l-csuite-muted',
+    medium: 'border-l-csuite-accent',
+    high: 'border-l-csuite-warning',
+    critical: 'border-l-csuite-error',
   }
 
   const statusIcons: Record<string, React.ReactNode> = {
-    pending: <Clock size={16} className="text-aw-muted" />,
-    running: <Loader2 size={16} className="text-aw-accent animate-spin" />,
-    completed: <Check size={16} className="text-aw-success" />,
-    failed: <XCircle size={16} className="text-aw-error" />,
+    pending: <Clock size={16} className="text-csuite-muted" />,
+    running: <Loader2 size={16} className="text-csuite-accent animate-spin" />,
+    completed: <Check size={16} className="text-csuite-success" />,
+    failed: <XCircle size={16} className="text-csuite-error" />,
   }
 
   const statusColors: Record<string, string> = {
-    pending: 'text-aw-muted',
-    running: 'text-aw-accent',
-    completed: 'text-aw-success',
-    failed: 'text-aw-error',
+    pending: 'text-csuite-muted',
+    running: 'text-csuite-accent',
+    completed: 'text-csuite-success',
+    failed: 'text-csuite-error',
   }
 
   return (
     <div
-      className={`bg-aw-surface rounded-xl border border-aw-border border-l-4 ${
-        priorityColors[task.priority] || 'border-l-aw-muted'
+      className={`bg-csuite-surface rounded-xl border border-csuite-border border-l-4 ${
+        priorityColors[task.priority] || 'border-l-csuite-muted'
       } overflow-hidden`}
     >
       <div
-        className="p-4 cursor-pointer hover:bg-aw-card/30 transition-colors"
+        className="p-4 cursor-pointer hover:bg-csuite-card/30 transition-colors"
         onClick={() => setExpanded(!expanded)}
       >
         <div className="flex items-start gap-4">
           <div className="mt-1">{statusIcons[task.status]}</div>
           <div className="flex-1 min-w-0">
-            <p className={`${task.status === 'completed' ? 'text-aw-muted' : 'text-aw-text'}`}>
+            <p className={`${task.status === 'completed' ? 'text-csuite-muted' : 'text-csuite-text'}`}>
               {task.description}
             </p>
             <div className="flex items-center gap-4 mt-2 text-sm">
-              <span className="text-aw-muted">{task.task_type}</span>
+              <span className="text-csuite-muted">{task.task_type}</span>
               <span className={statusColors[task.status]}>{task.status}</span>
               {task.routed_to && (
-                <span className="text-aw-accent">→ {task.routed_to}</span>
+                <span className="text-csuite-accent">→ {task.routed_to}</span>
               )}
             </div>
           </div>
           {task.result && (
             <ChevronDown
               size={20}
-              className={`text-aw-muted transition-transform ${expanded ? 'rotate-180' : ''}`}
+              className={`text-csuite-muted transition-transform ${expanded ? 'rotate-180' : ''}`}
             />
           )}
         </div>
@@ -247,10 +247,10 @@ function TaskCard({ task }: { task: {
 
       {/* Expanded result */}
       {expanded && task.result && (
-        <div className="px-4 pb-4 border-t border-aw-border">
-          <div className="bg-aw-card rounded-lg p-4 mt-4">
-            <h4 className="text-sm font-medium text-aw-muted mb-2">Result</h4>
-            <p className="text-sm text-aw-text whitespace-pre-wrap">
+        <div className="px-4 pb-4 border-t border-csuite-border">
+          <div className="bg-csuite-card rounded-lg p-4 mt-4">
+            <h4 className="text-sm font-medium text-csuite-muted mb-2">Result</h4>
+            <p className="text-sm text-csuite-text whitespace-pre-wrap">
               {typeof task.result === 'object' && task.result?.content
                 ? task.result.content
                 : String(task.result)}

@@ -18,7 +18,13 @@ from ag3ntwerk.api.auth import AuthenticatedUser, Permission, optional_auth, req
 logger = logging.getLogger(__name__)
 
 # Configurable auth: mirrors app.py pattern
-_auth_required = __import__("os").getenv("AGENTWERK_AUTH_REQUIRED", "false").lower() == "true"
+_auth_required = __import__("os").getenv("AGENTWERK_AUTH_REQUIRED", "true").lower() == "true"
+if not _auth_required:
+    import warnings
+    warnings.warn(
+        "AGENTWERK_AUTH_REQUIRED is disabled — API is unauthenticated!",
+        stacklevel=2,
+    )
 
 
 def _get_auth(permissions: set | None = None):

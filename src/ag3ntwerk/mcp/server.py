@@ -31,6 +31,11 @@ class AgentWerkMCPServer:
     """
     MCP Server exposing ag3ntwerk agents.
 
+    Security: This server communicates via stdio (stdin/stdout) only,
+    so it is not exposed over the network. If you add an HTTP/SSE
+    transport in the future, ensure it binds to 127.0.0.1 only and
+    requires an API key via AGENTWERK_MCP_KEY.
+
     Provides tools for:
     - Executing tasks via specific agents
     - Listing available agents and their capabilities
@@ -77,7 +82,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_find_executive_for_task",
+            name="agentwerk_find_agent_for_task",
             description="Find agents that can handle a specific task type.",
             inputSchema={
                 "type": "object",
@@ -91,7 +96,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_execute_task",
+            name="agentwerk_execute_task",
             description="Execute a task with a specific agent.",
             inputSchema={
                 "type": "object",
@@ -123,7 +128,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_route_task",
+            name="agentwerk_route_task",
             description="Route a task through Nexus for automatic agent assignment.",
             inputSchema={
                 "type": "object",
@@ -151,7 +156,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_list_workflows",
+            name="agentwerk_list_workflows",
             description="List all available workflows.",
             inputSchema={
                 "type": "object",
@@ -160,7 +165,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_run_workflow",
+            name="agentwerk_run_workflow",
             description="Execute a predefined workflow.",
             inputSchema={
                 "type": "object",
@@ -179,7 +184,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_system_status",
+            name="agentwerk_system_status",
             description="Get overall ag3ntwerk system status.",
             inputSchema={
                 "type": "object",
@@ -188,7 +193,7 @@ class AgentWerkMCPServer:
             },
         ),
         Tool(
-            name="ag3ntwerk_agent_capabilities",
+            name="agentwerk_agent_capabilities",
             description="Get capabilities of one or all agents.",
             inputSchema={
                 "type": "object",
@@ -283,13 +288,13 @@ class AgentWerkMCPServer:
         handlers = {
             "ag3ntwerk_list_agents": self._handle_list_agents,
             "ag3ntwerk_get_agent": self._handle_get_agent,
-            "ag3ntwerk_find_executive_for_task": self._handle_find_executive,
-            "ag3ntwerk_execute_task": self._handle_execute_task,
-            "ag3ntwerk_route_task": self._handle_route_task,
-            "ag3ntwerk_list_workflows": self._handle_list_workflows,
-            "ag3ntwerk_run_workflow": self._handle_run_workflow,
-            "ag3ntwerk_system_status": self._handle_system_status,
-            "ag3ntwerk_agent_capabilities": self._handle_capabilities,
+            "agentwerk_find_agent_for_task": self._handle_find_executive,
+            "agentwerk_execute_task": self._handle_execute_task,
+            "agentwerk_route_task": self._handle_route_task,
+            "agentwerk_list_workflows": self._handle_list_workflows,
+            "agentwerk_run_workflow": self._handle_run_workflow,
+            "agentwerk_system_status": self._handle_system_status,
+            "agentwerk_agent_capabilities": self._handle_capabilities,
         }
         return handlers.get(tool_name)
 

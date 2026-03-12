@@ -6,6 +6,7 @@ Can be used standalone or exported via /metrics endpoint.
 """
 
 import inspect
+import json as _json
 import logging
 import time
 from dataclasses import dataclass, field
@@ -280,7 +281,7 @@ class Histogram:
         with self._lock:
             result = {}
             for key in self._bucket_counts:
-                label_str = str(key.labels) if key.labels else "default"
+                label_str = _json.dumps(key.labels, sort_keys=True) if key.labels else "default"
                 result[label_str] = {
                     "buckets": dict(self._bucket_counts[key]),
                     "sum": self._sums.get(key, 0.0),
@@ -461,7 +462,13 @@ class MetricsCollector:
             lines.append(f"# TYPE {name} histogram")
 
             for label_group, data in histogram.collect().items():
-                base_labels = eval(label_group) if label_group != "default" else {}
+                if label_group != "default":
+                    try:
+                        base_labels = _json.loads(label_group)
+                    except (ValueError, TypeError):
+                        base_labels = {}
+                else:
+                    base_labels = {}
 
                 # Bucket values
                 cumulative = 0

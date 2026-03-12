@@ -27,7 +27,7 @@ from PySide6.QtCore import Qt, Signal, QTimer
 from PySide6.QtGui import QFont
 
 from .styles import COLORS, get_agent_color
-from .backend import AgentBackend
+from .backend import AgentWerkBackend
 from .swarm_panel import SwarmPanel
 
 logger = logging.getLogger(__name__)
@@ -629,7 +629,7 @@ class COODashboard(QMainWindow):
         self._exec_widgets: Dict[str, ExecutiveStatus] = {}
 
         # Backend
-        self._backend = AgentBackend(self)
+        self._backend = AgentWerkBackend(self)
         self._connect_signals()
 
         self._setup_ui()

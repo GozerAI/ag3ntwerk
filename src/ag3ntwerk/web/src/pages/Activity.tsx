@@ -90,8 +90,8 @@ export default function Activity() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-aw-text">System Activity</h1>
-          <p className="text-aw-muted mt-1">
+          <h1 className="text-3xl font-bold text-csuite-text">System Activity</h1>
+          <p className="text-csuite-muted mt-1">
             Autonomous operations dashboard - observe what the system is doing
           </p>
         </div>
@@ -101,7 +101,7 @@ export default function Activity() {
             fetchTasks()
             fetchGoals()
           }}
-          className="flex items-center gap-2 px-4 py-2 text-aw-muted hover:text-aw-text transition-colors"
+          className="flex items-center gap-2 px-4 py-2 text-csuite-muted hover:text-csuite-text transition-colors"
         >
           <RefreshCw size={20} />
           Refresh
@@ -112,27 +112,27 @@ export default function Activity() {
       <div
         className={`rounded-xl border p-6 mb-8 ${
           isRunning
-            ? 'bg-aw-success/10 border-aw-success/30'
-            : 'bg-aw-surface border-aw-border'
+            ? 'bg-csuite-success/10 border-csuite-success/30'
+            : 'bg-csuite-surface border-csuite-border'
         }`}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div
               className={`p-4 rounded-xl ${
-                isRunning ? 'bg-aw-success/20' : 'bg-aw-card'
+                isRunning ? 'bg-csuite-success/20' : 'bg-csuite-card'
               }`}
             >
               <Brain
                 size={32}
-                className={isRunning ? 'text-aw-success' : 'text-aw-muted'}
+                className={isRunning ? 'text-csuite-success' : 'text-csuite-muted'}
               />
             </div>
             <div>
-              <h2 className="text-xl font-semibold text-aw-text">
+              <h2 className="text-xl font-semibold text-csuite-text">
                 CoS (Overwatch) - {isRunning ? 'Active' : 'Idle'}
               </h2>
-              <p className="text-aw-muted">
+              <p className="text-csuite-muted">
                 Mode: <span className="font-medium">{cooStatus?.mode || 'supervised'}</span>
                 {cooStatus?.state && cooStatus.state !== 'idle' && (
                   <span className="ml-3">
@@ -145,17 +145,17 @@ export default function Activity() {
 
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <p className="text-2xl font-bold text-aw-text">
+              <p className="text-2xl font-bold text-csuite-text">
                 {cooStatus?.successful_executions || 0}
               </p>
-              <p className="text-sm text-aw-muted">tasks completed</p>
+              <p className="text-sm text-csuite-muted">tasks completed</p>
             </div>
             <button
               onClick={isRunning ? stopCOO : startCOO}
               className={`flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-colors ${
                 isRunning
-                  ? 'bg-aw-warning hover:bg-yellow-600 text-white'
-                  : 'bg-aw-success hover:bg-green-600 text-white'
+                  ? 'bg-csuite-warning hover:bg-yellow-600 text-white'
+                  : 'bg-csuite-success hover:bg-green-600 text-white'
               }`}
             >
               {isRunning ? (
@@ -175,8 +175,8 @@ export default function Activity() {
 
         {/* Current activity indicator */}
         {runningTasks.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-aw-success/20">
-            <div className="flex items-center gap-2 text-aw-success">
+          <div className="mt-4 pt-4 border-t border-csuite-success/20">
+            <div className="flex items-center gap-2 text-csuite-success">
               <Zap size={16} className="animate-pulse" />
               <span className="text-sm font-medium">Currently executing:</span>
               <span className="text-sm">{runningTasks[0].description}</span>
@@ -189,13 +189,13 @@ export default function Activity() {
         {/* Goal Progress - Left Column */}
         <div className="lg:col-span-2 space-y-6">
           {/* Strategic Goals */}
-          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
+          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold text-aw-text flex items-center gap-2">
-                <Target size={20} className="text-aw-accent" />
+              <h2 className="text-lg font-semibold text-csuite-text flex items-center gap-2">
+                <Target size={20} className="text-csuite-accent" />
                 Strategic Goals
               </h2>
-              <span className="text-sm text-aw-muted">
+              <span className="text-sm text-csuite-muted">
                 {activeGoals.length} active
               </span>
             </div>
@@ -212,26 +212,26 @@ export default function Activity() {
                       : goal.progress
 
                   return (
-                    <div key={goal.id} className="bg-aw-card rounded-lg p-4">
+                    <div key={goal.id} className="bg-csuite-card rounded-lg p-4">
                       <div className="flex items-start justify-between mb-2">
-                        <h3 className="font-medium text-aw-text">{goal.title}</h3>
-                        <span className="text-sm text-aw-muted">
+                        <h3 className="font-medium text-csuite-text">{goal.title}</h3>
+                        <span className="text-sm text-csuite-muted">
                           {completedMilestones}/{totalMilestones}
                         </span>
                       </div>
                       {goal.description && (
-                        <p className="text-sm text-aw-muted mb-3 line-clamp-2">
+                        <p className="text-sm text-csuite-muted mb-3 line-clamp-2">
                           {goal.description}
                         </p>
                       )}
                       <div className="flex items-center gap-3">
-                        <div className="flex-1 h-2 bg-aw-surface rounded-full overflow-hidden">
+                        <div className="flex-1 h-2 bg-csuite-surface rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-aw-accent rounded-full transition-all"
+                            className="h-full bg-csuite-accent rounded-full transition-all"
                             style={{ width: `${progress}%` }}
                           />
                         </div>
-                        <span className="text-xs text-aw-muted w-12 text-right">
+                        <span className="text-xs text-csuite-muted w-12 text-right">
                           {progress.toFixed(0)}%
                         </span>
                       </div>
@@ -241,16 +241,16 @@ export default function Activity() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <Target size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
-                <p className="text-aw-muted">No active goals</p>
+                <Target size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
+                <p className="text-csuite-muted">No active goals</p>
               </div>
             )}
           </section>
 
           {/* Activity Feed */}
-          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
-            <h2 className="text-lg font-semibold text-aw-text flex items-center gap-2 mb-4">
-              <ActivityIcon size={20} className="text-aw-accent" />
+          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+            <h2 className="text-lg font-semibold text-csuite-text flex items-center gap-2 mb-4">
+              <ActivityIcon size={20} className="text-csuite-accent" />
               Recent Activity
             </h2>
 
@@ -259,30 +259,30 @@ export default function Activity() {
                 {recentActivity.map((activity) => (
                   <div
                     key={activity.id}
-                    className="flex items-start gap-3 bg-aw-card rounded-lg p-3"
+                    className="flex items-start gap-3 bg-csuite-card rounded-lg p-3"
                   >
                     {activity.status === 'completed' ? (
-                      <CheckCircle size={18} className="text-aw-success mt-0.5" />
+                      <CheckCircle size={18} className="text-csuite-success mt-0.5" />
                     ) : activity.status === 'running' ? (
-                      <Clock size={18} className="text-aw-accent animate-pulse mt-0.5" />
+                      <Clock size={18} className="text-csuite-accent animate-pulse mt-0.5" />
                     ) : activity.status === 'failed' ? (
-                      <AlertCircle size={18} className="text-aw-error mt-0.5" />
+                      <AlertCircle size={18} className="text-csuite-error mt-0.5" />
                     ) : (
-                      <Clock size={18} className="text-aw-muted mt-0.5" />
+                      <Clock size={18} className="text-csuite-muted mt-0.5" />
                     )}
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-aw-text">{activity.title}</p>
+                      <p className="text-sm text-csuite-text">{activity.title}</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs text-aw-muted">{activity.description}</span>
+                        <span className="text-xs text-csuite-muted">{activity.description}</span>
                         {activity.executive && (
                           <>
-                            <span className="text-aw-border">|</span>
-                            <span className="text-xs text-aw-accent">{activity.executive}</span>
+                            <span className="text-csuite-border">|</span>
+                            <span className="text-xs text-csuite-accent">{activity.executive}</span>
                           </>
                         )}
                       </div>
                       {activity.result && activity.status === 'completed' && (
-                        <p className="text-xs text-aw-muted mt-2 line-clamp-2 bg-aw-surface p-2 rounded">
+                        <p className="text-xs text-csuite-muted mt-2 line-clamp-2 bg-csuite-surface p-2 rounded">
                           {activity.result.slice(0, 150)}
                           {activity.result.length > 150 ? '...' : ''}
                         </p>
@@ -293,9 +293,9 @@ export default function Activity() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <ActivityIcon size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
-                <p className="text-aw-muted">No recent activity</p>
-                <p className="text-sm text-aw-muted mt-1">
+                <ActivityIcon size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
+                <p className="text-csuite-muted">No recent activity</p>
+                <p className="text-sm text-csuite-muted mt-1">
                   Create a task or goal to see activity here
                 </p>
               </div>
@@ -336,9 +336,9 @@ export default function Activity() {
           </div>
 
           {/* Task Queue */}
-          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
-            <h2 className="text-lg font-semibold text-aw-text flex items-center gap-2 mb-4">
-              <Clock size={20} className="text-aw-warning" />
+          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+            <h2 className="text-lg font-semibold text-csuite-text flex items-center gap-2 mb-4">
+              <Clock size={20} className="text-csuite-warning" />
               Task Queue
             </h2>
 
@@ -347,35 +347,35 @@ export default function Activity() {
                 {pendingTasks.slice(0, 5).map((task, index) => (
                   <div
                     key={task.id}
-                    className="flex items-center gap-3 bg-aw-card rounded-lg p-3"
+                    className="flex items-center gap-3 bg-csuite-card rounded-lg p-3"
                   >
-                    <span className="w-6 h-6 rounded-full bg-aw-warning/20 text-aw-warning flex items-center justify-center text-xs font-medium">
+                    <span className="w-6 h-6 rounded-full bg-csuite-warning/20 text-csuite-warning flex items-center justify-center text-xs font-medium">
                       {index + 1}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-aw-text truncate">{task.description}</p>
-                      <p className="text-xs text-aw-muted">{task.task_type}</p>
+                      <p className="text-sm text-csuite-text truncate">{task.description}</p>
+                      <p className="text-xs text-csuite-muted">{task.task_type}</p>
                     </div>
-                    <ChevronRight size={16} className="text-aw-muted" />
+                    <ChevronRight size={16} className="text-csuite-muted" />
                   </div>
                 ))}
                 {pendingTasks.length > 5 && (
-                  <p className="text-xs text-aw-muted text-center pt-2">
+                  <p className="text-xs text-csuite-muted text-center pt-2">
                     +{pendingTasks.length - 5} more in queue
                   </p>
                 )}
               </div>
             ) : (
               <div className="text-center py-6">
-                <CheckCircle size={32} className="mx-auto mb-2 text-aw-success opacity-50" />
-                <p className="text-sm text-aw-muted">Queue is empty</p>
+                <CheckCircle size={32} className="mx-auto mb-2 text-csuite-success opacity-50" />
+                <p className="text-sm text-csuite-muted">Queue is empty</p>
               </div>
             )}
           </section>
 
           {/* System Mode Info */}
-          <section className="bg-aw-surface rounded-xl border border-aw-border p-6">
-            <h2 className="text-lg font-semibold text-aw-text mb-4">Operating Mode</h2>
+          <section className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+            <h2 className="text-lg font-semibold text-csuite-text mb-4">Operating Mode</h2>
             <div className="space-y-3">
               <ModeIndicator
                 label="Supervised"
@@ -393,7 +393,7 @@ export default function Activity() {
                 active={cooStatus?.mode === 'approval'}
               />
             </div>
-            <p className="text-xs text-aw-muted mt-4">
+            <p className="text-xs text-csuite-muted mt-4">
               Change mode in the COO settings
             </p>
           </section>
@@ -415,15 +415,15 @@ function StatCard({
   color: 'success' | 'warning' | 'error' | 'accent'
 }) {
   const colorMap = {
-    success: 'text-aw-success',
-    warning: 'text-aw-warning',
-    error: 'text-aw-error',
-    accent: 'text-aw-accent',
+    success: 'text-csuite-success',
+    warning: 'text-csuite-warning',
+    error: 'text-csuite-error',
+    accent: 'text-csuite-accent',
   }
 
   return (
-    <div className="bg-aw-surface rounded-xl border border-aw-border p-4">
-      <div className="flex items-center gap-2 text-aw-muted mb-1">
+    <div className="bg-csuite-surface rounded-xl border border-csuite-border p-4">
+      <div className="flex items-center gap-2 text-csuite-muted mb-1">
         <Icon size={14} />
         <span className="text-xs">{label}</span>
       </div>
@@ -445,14 +445,14 @@ function ModeIndicator({
     <div
       className={`p-3 rounded-lg border transition-colors ${
         active
-          ? 'border-aw-accent bg-aw-accent/10'
-          : 'border-aw-border bg-aw-card'
+          ? 'border-csuite-accent bg-csuite-accent/10'
+          : 'border-csuite-border bg-csuite-card'
       }`}
     >
-      <p className={`text-sm font-medium ${active ? 'text-aw-accent' : 'text-aw-muted'}`}>
+      <p className={`text-sm font-medium ${active ? 'text-csuite-accent' : 'text-csuite-muted'}`}>
         {label}
       </p>
-      <p className="text-xs text-aw-muted">{description}</p>
+      <p className="text-xs text-csuite-muted">{description}</p>
     </div>
   )
 }

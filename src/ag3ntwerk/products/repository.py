@@ -115,10 +115,17 @@ class RepositoryManager:
 
         Args:
             repo_path: Path to the git repository
+
+        Raises:
+            GitError: If path is not a git repository
+            ValueError: If path does not exist or is not a directory
         """
-        self.repo_path = Path(repo_path)
+        resolved = Path(repo_path).resolve()
+        if not resolved.is_dir():
+            raise ValueError(f"Repository path does not exist: {resolved}")
+        self.repo_path = resolved
         if not self._is_git_repo():
-            raise GitError(f"Not a git repository: {repo_path}")
+            raise GitError(f"Not a git repository: {resolved}")
 
     def _is_git_repo(self) -> bool:
         """Check if path is a git repository."""

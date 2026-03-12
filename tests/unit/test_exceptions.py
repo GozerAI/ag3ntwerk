@@ -33,7 +33,7 @@ from ag3ntwerk.core.exceptions import (
 )
 
 
-class TestAgentError:
+class TestAgentWerkError:
     """Test base AgentWerkError class."""
 
     def test_basic_error(self):
@@ -223,11 +223,11 @@ class TestConfigurationError:
 class TestIsRecoverable:
     """Test is_recoverable utility function."""
 
-    def test_agent_error_recoverable(self):
+    def testagentwerk_error_recoverable(self):
         error = AgentWerkError("Recoverable", recoverable=True)
         assert is_recoverable(error) is True
 
-    def test_agent_error_not_recoverable(self):
+    def testagentwerk_error_not_recoverable(self):
         error = AgentWerkError("Not recoverable", recoverable=False)
         assert is_recoverable(error) is False
 

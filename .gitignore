@@ -58,6 +58,9 @@ nul
 *.exe
 *.dll
 *.bat
+!C-Suite.bat
+!start-csuite.bat
+!create-desktop-shortcut.bat
 *.bak
 
 # Temporary / tool-generated files

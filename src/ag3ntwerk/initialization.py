@@ -20,12 +20,12 @@ also be accessed by individual agents for their domain-specific learning.
 Usage:
     ```python
     from ag3ntwerk.initialization import (
-        initialize_system,
-        AgentSystem,
+        initialize_agentwerk,
+        AgentWerkSystem,
     )
 
     # Full initialization with learning system
-    system = await initialize_system(
+    system = await initialize_agentwerk(
         llm_provider=provider,
         db=database,
         task_queue=queue,
@@ -82,7 +82,7 @@ ACTIVE_AGENTS: Set[str] = {
 
 
 @dataclass
-class AgentSystem:
+class AgentWerkSystem:
     """
     Container for initialized ag3ntwerk system components.
 
@@ -130,13 +130,13 @@ class AgentSystem:
         }
 
 
-async def initialize_system(
+async def initialize_agentwerk(
     llm_provider: "BaseLLMProvider",
     db: Optional["Database"] = None,
     task_queue: Optional[Any] = None,
     enable_learning: bool = True,
     config: Optional[Dict[str, Any]] = None,
-) -> AgentSystem:
+) -> AgentWerkSystem:
     """
     Initialize the complete ag3ntwerk system.
 
@@ -161,7 +161,7 @@ async def initialize_system(
             - learning_config: Configuration for learning system
 
     Returns:
-        AgentSystem containing initialized components
+        AgentWerkSystem containing initialized components
 
     Raises:
         ValueError: If learning is enabled but db/task_queue not provided
@@ -169,10 +169,10 @@ async def initialize_system(
     Example:
         ```python
         # Basic initialization
-        system = await initialize_system(llm_provider=provider)
+        system = await initialize_agentwerk(llm_provider=provider)
 
         # With learning system
-        system = await initialize_system(
+        system = await initialize_agentwerk(
             llm_provider=provider,
             db=database,
             task_queue=queue,
@@ -180,7 +180,7 @@ async def initialize_system(
         )
 
         # With custom configuration
-        system = await initialize_system(
+        system = await initialize_agentwerk(
             llm_provider=provider,
             config={
                 "enabled_agents": {"Forge", "Keystone", "Sentinel"},
@@ -240,7 +240,7 @@ async def initialize_system(
             config=config.get("learning_config", {}),
         )
 
-    return AgentSystem(
+    return AgentWerkSystem(
         cos=cos,
         learning_orchestrator=learning_orchestrator,
         registered_executives=registered,
@@ -310,7 +310,7 @@ def create_overwatch_with_agents(
 
     Use this when you don't need the learning system but want proper
     agent wiring. For full initialization with learning, use
-    `initialize_system()` instead.
+    `initialize_agentwerk()` instead.
 
     Args:
         llm_provider: Connected LLM provider

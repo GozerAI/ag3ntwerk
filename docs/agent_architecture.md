@@ -132,7 +132,7 @@ The CKO (Chief Knowledge Officer) was merged into Index (Index). All knowledge m
 ## File Structure
 
 ```
-/path/to/ag3ntwerk\
+F:\Projects\ag3ntwerk\
 └── src\
     └── ag3ntwerk\
         └── agents\

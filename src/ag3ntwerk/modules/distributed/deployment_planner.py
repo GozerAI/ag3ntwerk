@@ -1223,7 +1223,7 @@ Type=simple
 User=ag3ntwerk
 Group=ag3ntwerk
 WorkingDirectory=/opt/ag3ntwerk/agent
-ExecStart=/opt/ag3ntwerk/venv/bin/uvicorn ag3ntwerk_agent:app --host 0.0.0.0 --port 8000 --workers 2
+ExecStart=/opt/ag3ntwerk/venv/bin/uvicorn agentwerk_agent:app --host 0.0.0.0 --port 8000 --workers 2
 Restart=always
 RestartSec=10
 Environment=AGENTWERK_CONFIG=/opt/ag3ntwerk/config/agent.json

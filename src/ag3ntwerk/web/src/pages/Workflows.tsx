@@ -445,7 +445,7 @@ export default function Workflows() {
   if (loading) {
     return (
       <div className="p-8 flex items-center justify-center">
-        <Loader2 size={32} className="animate-spin text-aw-accent" />
+        <Loader2 size={32} className="animate-spin text-csuite-accent" />
       </div>
     )
   }
@@ -455,14 +455,14 @@ export default function Workflows() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-aw-text">Autonomous Workflows</h1>
-          <p className="text-aw-muted mt-1">
+          <h1 className="text-3xl font-bold text-csuite-text">Autonomous Workflows</h1>
+          <p className="text-csuite-muted mt-1">
             Multi-executive coordinated workflows for complex business processes
           </p>
         </div>
         <button
           onClick={fetchHistory}
-          className="flex items-center gap-2 px-4 py-2 text-aw-muted hover:text-aw-text transition-colors"
+          className="flex items-center gap-2 px-4 py-2 text-csuite-muted hover:text-csuite-text transition-colors"
         >
           <RefreshCw size={20} />
           Refresh
@@ -471,28 +471,28 @@ export default function Workflows() {
 
       {/* Workflows Grid */}
       <section className="mb-8">
-        <h2 className="text-lg font-semibold text-aw-text mb-4">Available Workflows</h2>
+        <h2 className="text-lg font-semibold text-csuite-text mb-4">Available Workflows</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {workflows.map((workflow) => (
             <div
               key={workflow.name}
-              className="bg-aw-surface rounded-xl border border-aw-border p-6 hover:border-aw-accent/50 transition-colors"
+              className="bg-csuite-surface rounded-xl border border-csuite-border p-6 hover:border-csuite-accent/50 transition-colors"
             >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-aw-accent/10 rounded-lg">
-                    <GitBranch size={24} className="text-aw-accent" />
+                  <div className="p-2 bg-csuite-accent/10 rounded-lg">
+                    <GitBranch size={24} className="text-csuite-accent" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-aw-text">
+                    <h3 className="text-lg font-semibold text-csuite-text">
                       {WORKFLOW_PARAMS[workflow.name]?.label || workflow.name}
                     </h3>
-                    <p className="text-sm text-aw-muted">{workflow.description}</p>
+                    <p className="text-sm text-csuite-muted">{workflow.description}</p>
                   </div>
                 </div>
                 <button
                   onClick={() => openExecuteModal(workflow.name)}
-                  className="flex items-center gap-2 px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600 transition-colors"
                 >
                   <Play size={16} />
                   Run
@@ -502,7 +502,7 @@ export default function Workflows() {
               {/* Show workflow steps preview */}
               <button
                 onClick={() => setSelectedWorkflow(selectedWorkflow === workflow.name ? null : workflow.name)}
-                className="mt-4 flex items-center gap-2 text-sm text-aw-muted hover:text-aw-text"
+                className="mt-4 flex items-center gap-2 text-sm text-csuite-muted hover:text-csuite-text"
               >
                 {selectedWorkflow === workflow.name ? (
                   <ChevronDown size={16} />
@@ -517,18 +517,18 @@ export default function Workflows() {
                   {workflowDetails.steps?.map((step, index) => (
                     <div
                       key={step.name}
-                      className="flex items-center gap-3 text-sm bg-aw-card rounded-lg p-3"
+                      className="flex items-center gap-3 text-sm bg-csuite-card rounded-lg p-3"
                     >
-                      <span className="w-6 h-6 rounded-full bg-aw-accent/20 text-aw-accent flex items-center justify-center text-xs font-medium">
+                      <span className="w-6 h-6 rounded-full bg-csuite-accent/20 text-csuite-accent flex items-center justify-center text-xs font-medium">
                         {index + 1}
                       </span>
                       <div className="flex-1">
-                        <p className="text-aw-text">{step.description}</p>
+                        <p className="text-csuite-text">{step.description}</p>
                         <div className="flex items-center gap-2 mt-1">
-                          <Users size={12} className="text-aw-muted" />
-                          <span className="text-xs text-aw-muted">{step.executive}</span>
+                          <Users size={12} className="text-csuite-muted" />
+                          <span className="text-xs text-csuite-muted">{step.executive}</span>
                           {!step.required && (
-                            <span className="text-xs text-aw-warning">(optional)</span>
+                            <span className="text-xs text-csuite-warning">(optional)</span>
                           )}
                         </div>
                       </div>
@@ -543,16 +543,16 @@ export default function Workflows() {
 
       {/* Execution History */}
       <section>
-        <h2 className="text-lg font-semibold text-aw-text mb-4">Execution History</h2>
+        <h2 className="text-lg font-semibold text-csuite-text mb-4">Execution History</h2>
         {executions.length > 0 ? (
           <div className="space-y-3">
             {executions.map((execution) => (
               <div
                 key={execution.workflow_id}
-                className="bg-aw-surface rounded-xl border border-aw-border overflow-hidden"
+                className="bg-csuite-surface rounded-xl border border-csuite-border overflow-hidden"
               >
                 <div
-                  className="p-4 cursor-pointer hover:bg-aw-card/30 transition-colors"
+                  className="p-4 cursor-pointer hover:bg-csuite-card/30 transition-colors"
                   onClick={() =>
                     setExpandedExecution(
                       expandedExecution === execution.workflow_id ? null : execution.workflow_id
@@ -562,17 +562,17 @@ export default function Workflows() {
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       {execution.status === 'completed' ? (
-                        <CheckCircle size={20} className="text-aw-success" />
+                        <CheckCircle size={20} className="text-csuite-success" />
                       ) : execution.status === 'failed' ? (
-                        <XCircle size={20} className="text-aw-error" />
+                        <XCircle size={20} className="text-csuite-error" />
                       ) : (
-                        <Clock size={20} className="text-aw-muted" />
+                        <Clock size={20} className="text-csuite-muted" />
                       )}
                       <div>
-                        <p className="text-aw-text font-medium">
+                        <p className="text-csuite-text font-medium">
                           {WORKFLOW_PARAMS[execution.workflow_name]?.label || execution.workflow_name}
                         </p>
-                        <p className="text-xs text-aw-muted">
+                        <p className="text-xs text-csuite-muted">
                           {new Date(execution.started_at).toLocaleString()}
                           {execution.duration_seconds && ` (${execution.duration_seconds.toFixed(1)}s)`}
                         </p>
@@ -582,16 +582,16 @@ export default function Workflows() {
                       <span
                         className={`px-2 py-1 rounded text-xs ${
                           execution.success
-                            ? 'bg-aw-success/10 text-aw-success'
-                            : 'bg-aw-error/10 text-aw-error'
+                            ? 'bg-csuite-success/10 text-csuite-success'
+                            : 'bg-csuite-error/10 text-csuite-error'
                         }`}
                       >
                         {execution.status}
                       </span>
                       {expandedExecution === execution.workflow_id ? (
-                        <ChevronDown size={20} className="text-aw-muted" />
+                        <ChevronDown size={20} className="text-csuite-muted" />
                       ) : (
-                        <ChevronRight size={20} className="text-aw-muted" />
+                        <ChevronRight size={20} className="text-csuite-muted" />
                       )}
                     </div>
                   </div>
@@ -599,33 +599,33 @@ export default function Workflows() {
 
                 {/* Expanded execution details */}
                 {expandedExecution === execution.workflow_id && (
-                  <div className="border-t border-aw-border p-4 bg-aw-card/30">
-                    <h4 className="text-sm font-medium text-aw-muted mb-3">Step Results</h4>
+                  <div className="border-t border-csuite-border p-4 bg-csuite-card/30">
+                    <h4 className="text-sm font-medium text-csuite-muted mb-3">Step Results</h4>
                     <div className="space-y-2">
                       {execution.steps.map((step) => (
                         <div
                           key={step.name}
-                          className="flex items-start gap-3 bg-aw-surface rounded-lg p-3"
+                          className="flex items-start gap-3 bg-csuite-surface rounded-lg p-3"
                         >
                           {step.status === 'completed' ? (
-                            <CheckCircle size={16} className="text-aw-success mt-0.5" />
+                            <CheckCircle size={16} className="text-csuite-success mt-0.5" />
                           ) : step.status === 'failed' ? (
-                            <XCircle size={16} className="text-aw-error mt-0.5" />
+                            <XCircle size={16} className="text-csuite-error mt-0.5" />
                           ) : step.status === 'skipped' ? (
-                            <Clock size={16} className="text-aw-warning mt-0.5" />
+                            <Clock size={16} className="text-csuite-warning mt-0.5" />
                           ) : (
-                            <Clock size={16} className="text-aw-muted mt-0.5" />
+                            <Clock size={16} className="text-csuite-muted mt-0.5" />
                           )}
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center justify-between">
-                              <p className="text-sm text-aw-text font-medium">{step.name}</p>
-                              <span className="text-xs text-aw-muted">{step.executive}</span>
+                              <p className="text-sm text-csuite-text font-medium">{step.name}</p>
+                              <span className="text-xs text-csuite-muted">{step.executive}</span>
                             </div>
                             {step.error && (
-                              <p className="text-xs text-aw-error mt-1">{String(step.error)}</p>
+                              <p className="text-xs text-csuite-error mt-1">{String(step.error)}</p>
                             )}
                             {step.result !== undefined && step.result !== null && (
-                              <p className="text-xs text-aw-muted mt-1 truncate">
+                              <p className="text-xs text-csuite-muted mt-1 truncate">
                                 {typeof step.result === 'string'
                                   ? (step.result as string).slice(0, 100)
                                   : 'Result available'}
@@ -637,8 +637,8 @@ export default function Workflows() {
                     </div>
 
                     {execution.error && (
-                      <div className="mt-4 p-3 bg-aw-error/10 border border-aw-error/30 rounded-lg">
-                        <p className="text-sm text-aw-error">{execution.error}</p>
+                      <div className="mt-4 p-3 bg-csuite-error/10 border border-csuite-error/30 rounded-lg">
+                        <p className="text-sm text-csuite-error">{execution.error}</p>
                       </div>
                     )}
                   </div>
@@ -647,10 +647,10 @@ export default function Workflows() {
             ))}
           </div>
         ) : (
-          <div className="bg-aw-surface rounded-xl border border-aw-border p-8 text-center">
-            <GitBranch size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
-            <p className="text-aw-muted">No workflow executions yet</p>
-            <p className="text-sm text-aw-muted mt-1">
+          <div className="bg-csuite-surface rounded-xl border border-csuite-border p-8 text-center">
+            <GitBranch size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
+            <p className="text-csuite-muted">No workflow executions yet</p>
+            <p className="text-sm text-csuite-muted mt-1">
               Run a workflow to see results here
             </p>
           </div>
@@ -660,22 +660,22 @@ export default function Workflows() {
       {/* Execute Workflow Modal */}
       {showExecuteModal && selectedWorkflow && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-aw-surface rounded-xl border border-aw-border p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto">
-            <h2 className="text-xl font-semibold text-aw-text mb-4">
+          <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6 w-full max-w-lg max-h-[80vh] overflow-y-auto">
+            <h2 className="text-xl font-semibold text-csuite-text mb-4">
               Execute: {WORKFLOW_PARAMS[selectedWorkflow]?.label || selectedWorkflow}
             </h2>
 
             <div className="space-y-4">
               {WORKFLOW_PARAMS[selectedWorkflow]?.fields.map((field) => (
                 <div key={field.name}>
-                  <label className="block text-sm text-aw-muted mb-1">{field.label}</label>
+                  <label className="block text-sm text-csuite-muted mb-1">{field.label}</label>
                   {field.type === 'select' ? (
                     <select
                       value={formParams[field.name] || ''}
                       onChange={(e) =>
                         setFormParams((prev) => ({ ...prev, [field.name]: e.target.value }))
                       }
-                      className="w-full bg-aw-card border border-aw-border rounded-lg px-4 py-2 text-aw-text"
+                      className="w-full bg-csuite-card border border-csuite-border rounded-lg px-4 py-2 text-csuite-text"
                     >
                       <option value="low">Low</option>
                       <option value="medium">Medium</option>
@@ -690,7 +690,7 @@ export default function Workflows() {
                       onChange={(e) =>
                         setFormParams((prev) => ({ ...prev, [field.name]: e.target.value }))
                       }
-                      className="w-full bg-aw-card border border-aw-border rounded-lg px-4 py-2 text-aw-text"
+                      className="w-full bg-csuite-card border border-csuite-border rounded-lg px-4 py-2 text-csuite-text"
                     />
                   )}
                 </div>
@@ -703,7 +703,7 @@ export default function Workflows() {
                   setShowExecuteModal(false)
                   setFormParams({})
                 }}
-                className="px-4 py-2 text-aw-muted hover:text-aw-text"
+                className="px-4 py-2 text-csuite-muted hover:text-csuite-text"
                 disabled={executing}
               >
                 Cancel
@@ -711,7 +711,7 @@ export default function Workflows() {
               <button
                 onClick={handleExecute}
                 disabled={executing}
-                className="px-4 py-2 bg-aw-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50 flex items-center gap-2"
+                className="px-4 py-2 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50 flex items-center gap-2"
               >
                 {executing && <Loader2 size={16} className="animate-spin" />}
                 {executing ? 'Executing...' : 'Execute Workflow'}

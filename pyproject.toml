@@ -58,9 +58,9 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/GozerAI/ag3ntwerk"
-Documentation = "https://github.com/GozerAI/ag3ntwerk#readme"
-Repository = "https://github.com/GozerAI/ag3ntwerk"
+Homepage = "https://github.com/chrisarseno/ag3ntwerk"
+Documentation = "https://github.com/chrisarseno/ag3ntwerk#readme"
+Repository = "https://github.com/chrisarseno/ag3ntwerk"
 
 [project.scripts]
 ag3ntwerk = "ag3ntwerk.cli:main"

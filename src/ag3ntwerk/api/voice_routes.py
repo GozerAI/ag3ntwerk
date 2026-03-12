@@ -177,7 +177,7 @@ async def transcribe_audio(
 
     # Create temp file with proper extension
     temp_dir = tempfile.gettempdir()
-    temp_path = Path(temp_dir) / f"audio_{_get_transcription_id()}{ext}"
+    temp_path = Path(temp_dir) / f"agentwerk_audio_{_get_transcription_id()}{ext}"
 
     try:
         # Save uploaded file

@@ -13,22 +13,22 @@ Each agent has an official codename (primary API) and a legacy code
 
     Codename    Legacy   Domain
     ---------   ------   ------
-    Overwatch   CoS      Internal Coordinator
-    Nexus       COO      Strategic Intelligence (deprecated shim)
-    Forge       CTO      Technical Foundation
-    Keystone    CFO      Financial Health
-    Echo        CMO      Marketing & Growth
-    Sentinel    CIO      Information Governance
-    Blueprint   CPO      Product Direction
-    Axiom       CRO      Research & Insights
-    Compass     CSO      Strategic Direction
-    Index       CDO      Data Governance & Knowledge
-    Foundry     CEngO    Engineering Execution
-    Citadel     CSecO    Security Operations
-    Beacon      CCO      Customer Relations
-    Vector      CRevO    Revenue Operations
-    Aegis       CRiO     Risk Management
-    Accord      CComO    Compliance
+    Overwatch   Overwatch      Internal Coordinator
+    Nexus       Nexus      Strategic Intelligence (deprecated shim)
+    Forge       Forge      Technical Foundation
+    Keystone    Keystone      Financial Health
+    Echo        Echo      Marketing & Growth
+    Sentinel    Sentinel      Information Governance
+    Blueprint   Blueprint      Product Direction
+    Axiom       Axiom      Research & Insights
+    Compass     Compass      Strategic Direction
+    Index       Index      Data Governance & Knowledge
+    Foundry     Foundry    Engineering Execution
+    Citadel     Citadel    Security Operations
+    Beacon      Beacon      Customer Relations
+    Vector      Vector    Revenue Operations
+    Aegis       Aegis     Risk Management
+    Accord      Accord    Compliance
 """
 
 # ---------------------------------------------------------------------------
@@ -58,25 +58,25 @@ from ag3ntwerk.agents.aegis import Aegis
 from ag3ntwerk.agents.accord import Accord
 
 # ---------------------------------------------------------------------------
-# Legacy aliases -- old executive codes map to codenames (backward compat)
+# Legacy aliases -- old agent codes map to codenames (backward compat)
 # ---------------------------------------------------------------------------
 
-CoS = Overwatch
-COO = Nexus  # deprecated shim; prefer Overwatch directly
-CTO = Forge
-CFO = Keystone
-CMO = Echo
-CIO = Sentinel
-CPO = Blueprint
-CRO = Axiom
-CSO = Compass
-CDO = Index
-CEngO = Foundry
-CSecO = Citadel
-CCO = Beacon
-CRevO = Vector
-CRiO = Aegis
-CComO = Accord
+Overwatch = Overwatch
+Nexus = Nexus  # deprecated shim; prefer Overwatch directly
+Forge = Forge
+Keystone = Keystone
+Echo = Echo
+Sentinel = Sentinel
+Blueprint = Blueprint
+Axiom = Axiom
+Compass = Compass
+Index = Index
+Foundry = Foundry
+Citadel = Citadel
+Beacon = Beacon
+Vector = Vector
+Aegis = Aegis
+Accord = Accord
 
 # ---------------------------------------------------------------------------
 # Public API
@@ -101,20 +101,20 @@ __all__ = [
     "Aegis",
     "Accord",
     # Legacy codes (backward compat)
-    "CoS",
-    "COO",
-    "CTO",
-    "CFO",
-    "CMO",
-    "CIO",
-    "CPO",
-    "CRO",
-    "CSO",
-    "CDO",
-    "CEngO",
-    "CSecO",
-    "CCO",
-    "CRevO",
-    "CRiO",
-    "CComO",
+    "Overwatch",
+    "Nexus",
+    "Forge",
+    "Keystone",
+    "Echo",
+    "Sentinel",
+    "Blueprint",
+    "Axiom",
+    "Compass",
+    "Index",
+    "Foundry",
+    "Citadel",
+    "Beacon",
+    "Vector",
+    "Aegis",
+    "Accord",
 ]

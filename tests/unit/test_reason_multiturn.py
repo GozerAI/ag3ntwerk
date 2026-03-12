@@ -248,7 +248,7 @@ def _make_agent_with_codename(llm_provider=None, codename="Forge"):
 
 
 @pytest.mark.asyncio
-async def test_org_context_agent_framing_and_codename():
+async def test_org_contextagentwerk_framing_and_codename():
     """System message includes ag3ntwerk framing and codename when org context is provided."""
     llm = _mock_llm()
     agent = _make_agent_with_codename(llm, codename="Forge")

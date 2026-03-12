@@ -61,22 +61,22 @@ class AgentRegistry:
 
     # Backward-compatibility aliases: old agent code -> codename
     AGENT_ALIASES = {
-        "CoS": "Overwatch",
-        "CTO": "Forge",
-        "CFO": "Keystone",
-        "CMO": "Echo",
-        "CIO": "Sentinel",
-        "CPO": "Blueprint",
-        "CDO": "Axiom",
+        "Overwatch": "Overwatch",
+        "Forge": "Forge",
+        "Keystone": "Keystone",
+        "Echo": "Echo",
+        "Sentinel": "Sentinel",
+        "Blueprint": "Blueprint",
+        "Index": "Axiom",
         "CDaO": "Index",
-        "CEngO": "Foundry",
-        "CSecO": "Citadel",
-        "CCO": "Beacon",
-        "CRevO": "Vector",
-        "CRiO": "Aegis",
+        "Foundry": "Foundry",
+        "Citadel": "Citadel",
+        "Beacon": "Beacon",
+        "Vector": "Vector",
+        "Aegis": "Aegis",
         "CCoMO": "Accord",
-        "CSO": "Compass",
-        "COO": "Nexus",
+        "Compass": "Compass",
+        "Nexus": "Nexus",
     }
 
     def __init__(
@@ -180,7 +180,7 @@ class AgentRegistry:
 
         Lazily instantiates if not already created.
         Accepts codenames ("Blueprint", "Keystone") or legacy agent codes
-        ("CPO", "CFO") via AGENT_ALIASES.
+        ("Blueprint", "Keystone") via AGENT_ALIASES.
 
         Args:
             code: Agent codename or legacy code

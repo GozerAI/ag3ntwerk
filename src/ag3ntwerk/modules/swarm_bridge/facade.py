@@ -111,7 +111,7 @@ class SwarmFacade:
 
         # Build metadata with ag3ntwerk context
         metadata = {
-            "ag3ntwerk_agent": agent_code,
+            "agentwerk_agent": agent_code,
             "task_tags": task_tags,
             "preferred_model": preferred_model,
             "agent_traits": agent_context.get("traits", {}),

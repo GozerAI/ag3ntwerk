@@ -16,9 +16,9 @@ import ContentPipeline from './pages/ContentPipeline'
 function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center h-full p-8">
-      <h1 className="text-4xl font-bold text-aw-text mb-2">404</h1>
-      <p className="text-aw-muted mb-4">Page not found</p>
-      <a href="/" className="text-aw-accent hover:underline">Return to Dashboard</a>
+      <h1 className="text-4xl font-bold text-csuite-text mb-2">404</h1>
+      <p className="text-csuite-muted mb-4">Page not found</p>
+      <a href="/" className="text-csuite-accent hover:underline">Return to Dashboard</a>
     </div>
   )
 }

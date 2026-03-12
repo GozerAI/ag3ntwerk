@@ -3,7 +3,7 @@
 import os
 
 
-def test_config_reads_env_vars(monkeypatch):
+def test_config_reads_agentwerk_vars(monkeypatch):
     monkeypatch.setenv("AGENTWERK_ENV", "development")
     monkeypatch.setenv("AGENTWERK_HOST", "127.0.0.1")
     monkeypatch.setenv("AGENTWERK_PORT", "3737")

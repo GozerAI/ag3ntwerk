@@ -319,7 +319,7 @@ def is_recoverable(error: Exception) -> bool:
     """Check if an error is recoverable and can be retried."""
     if isinstance(error, AgentWerkError):
         return error.recoverable
-    # For non-framework errors, assume transient errors are recoverable
+    # For non-AgentWerk errors, assume transient errors are recoverable
     transient_errors = (
         TimeoutError,
         ConnectionError,

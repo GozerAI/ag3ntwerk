@@ -1,14 +1,14 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "ag3ntwerk.name" -}}
+{{- define "csuite.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Create a default fully qualified app name.
 */}}
-{{- define "ag3ntwerk.fullname" -}}
+{{- define "csuite.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -24,16 +24,16 @@ Create a default fully qualified app name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "ag3ntwerk.chart" -}}
+{{- define "csuite.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "ag3ntwerk.labels" -}}
-helm.sh/chart: {{ include "ag3ntwerk.chart" . }}
-{{ include "ag3ntwerk.selectorLabels" . }}
+{{- define "csuite.labels" -}}
+helm.sh/chart: {{ include "csuite.chart" . }}
+{{ include "csuite.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -43,17 +43,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "ag3ntwerk.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "ag3ntwerk.name" . }}
+{{- define "csuite.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "csuite.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "ag3ntwerk.serviceAccountName" -}}
+{{- define "csuite.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "ag3ntwerk.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "csuite.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -62,10 +62,10 @@ Create the name of the service account to use
 {{/*
 Secret name
 */}}
-{{- define "ag3ntwerk.secretName" -}}
+{{- define "csuite.secretName" -}}
 {{- if .Values.externalSecrets.enabled }}
 {{- .Values.externalSecrets.secretName }}
 {{- else }}
-{{- include "ag3ntwerk.fullname" . }}-secrets
+{{- include "csuite.fullname" . }}-secrets
 {{- end }}
 {{- end }}

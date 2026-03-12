@@ -33,8 +33,8 @@ export default function Memory() {
     <div className="p-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-aw-text">Memory & Knowledge</h1>
-        <p className="text-aw-muted mt-1">Search and explore your knowledge base</p>
+        <h1 className="text-3xl font-bold text-csuite-text">Memory & Knowledge</h1>
+        <p className="text-csuite-muted mt-1">Search and explore your knowledge base</p>
       </div>
 
       {/* Stats */}
@@ -62,13 +62,13 @@ export default function Memory() {
       </div>
 
       {/* Search */}
-      <div className="bg-aw-surface rounded-xl border border-aw-border p-6 mb-6">
-        <h2 className="text-xl font-semibold text-aw-text mb-4">Search Memory</h2>
+      <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6 mb-6">
+        <h2 className="text-xl font-semibold text-csuite-text mb-4">Search Memory</h2>
         <div className="flex gap-3">
           <div className="flex-1 relative">
             <Search
               size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-aw-muted"
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-csuite-muted"
             />
             <input
               type="text"
@@ -76,13 +76,13 @@ export default function Memory() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-              className="w-full bg-aw-card border border-aw-border rounded-lg pl-12 pr-4 py-3 text-aw-text placeholder:text-aw-muted"
+              className="w-full bg-csuite-card border border-csuite-border rounded-lg pl-12 pr-4 py-3 text-csuite-text placeholder:text-csuite-muted"
             />
           </div>
           <button
             onClick={handleSearch}
             disabled={searching}
-            className="px-6 py-3 bg-aw-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50 transition-colors"
+            className="px-6 py-3 bg-csuite-accent text-white rounded-lg hover:bg-indigo-600 disabled:opacity-50 transition-colors"
           >
             {searching ? 'Searching...' : 'Search'}
           </button>
@@ -91,27 +91,27 @@ export default function Memory() {
 
       {/* Results */}
       {results.length > 0 && (
-        <div className="bg-aw-surface rounded-xl border border-aw-border p-6">
-          <h2 className="text-xl font-semibold text-aw-text mb-4">
+        <div className="bg-csuite-surface rounded-xl border border-csuite-border p-6">
+          <h2 className="text-xl font-semibold text-csuite-text mb-4">
             Results ({results.length})
           </h2>
           <div className="space-y-4">
             {results.map((result, i) => (
               <div
                 key={i}
-                className="bg-aw-card rounded-lg p-4 border border-aw-border"
+                className="bg-csuite-card rounded-lg p-4 border border-csuite-border"
               >
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-aw-muted">
+                  <span className="text-sm text-csuite-muted">
                     Score: {(result.score * 100).toFixed(1)}%
                   </span>
                   {result.metadata?.source && (
-                    <span className="text-xs text-aw-muted bg-aw-surface px-2 py-1 rounded">
+                    <span className="text-xs text-csuite-muted bg-csuite-surface px-2 py-1 rounded">
                       {result.metadata.source}
                     </span>
                   )}
                 </div>
-                <p className="text-aw-text">{result.content}</p>
+                <p className="text-csuite-text">{result.content}</p>
               </div>
             ))}
           </div>
@@ -120,9 +120,9 @@ export default function Memory() {
 
       {/* Empty state */}
       {query && results.length === 0 && !searching && (
-        <div className="bg-aw-surface rounded-xl border border-aw-border p-8 text-center">
-          <Database size={48} className="mx-auto mb-2 text-aw-muted opacity-50" />
-          <p className="text-aw-muted">No results found for "{query}"</p>
+        <div className="bg-csuite-surface rounded-xl border border-csuite-border p-8 text-center">
+          <Database size={48} className="mx-auto mb-2 text-csuite-muted opacity-50" />
+          <p className="text-csuite-muted">No results found for "{query}"</p>
         </div>
       )}
     </div>
@@ -139,12 +139,12 @@ function StatCard({
   value: number
 }) {
   return (
-    <div className="bg-aw-surface rounded-xl border border-aw-border p-4">
-      <div className="flex items-center gap-2 text-aw-muted mb-2">
+    <div className="bg-csuite-surface rounded-xl border border-csuite-border p-4">
+      <div className="flex items-center gap-2 text-csuite-muted mb-2">
         <Icon size={16} />
         <span className="text-sm">{label}</span>
       </div>
-      <p className="text-2xl font-bold text-aw-text">{value.toLocaleString()}</p>
+      <p className="text-2xl font-bold text-csuite-text">{value.toLocaleString()}</p>
     </div>
   )
 }

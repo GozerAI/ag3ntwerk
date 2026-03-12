@@ -141,7 +141,13 @@ logger = get_logger(__name__)
 # ============================================================
 
 # Configurable auth: set AGENTWERK_AUTH_REQUIRED=true in production
-_auth_required = os.getenv("AGENTWERK_AUTH_REQUIRED", "false").lower() == "true"
+_auth_required = os.getenv("AGENTWERK_AUTH_REQUIRED", "true").lower() == "true"
+if not _auth_required:
+    import warnings
+    warnings.warn(
+        "AGENTWERK_AUTH_REQUIRED is disabled — API is unauthenticated!",
+        stacklevel=2,
+    )
 
 
 def get_auth_dependency(permissions: Optional[set] = None):

@@ -61,7 +61,7 @@ class ScanProtocol(str, Enum):
     MDNS = "mdns"
     SSDP = "ssdp"
     ARP_SCAN = "arp_scan"
-    AGENTWERK_BEACON = "ag3ntwerk_beacon"
+    AGENTWERK_BEACON = "agentwerk_beacon"
 
 
 @dataclass
@@ -87,8 +87,8 @@ class DeviceFingerprint:
     services: Dict[str, str] = field(default_factory=dict)
     has_ssh: bool = False
     has_http: bool = False
-    has_agent: bool = False
-    agent_version: str = ""
+    has_agentwerk_agent: bool = False
+    agentwerk_agent_version: str = ""
     response_time_ms: float = 0.0
     probed_at: Optional[datetime] = None
 
@@ -132,8 +132,8 @@ class DiscoveredDevice:
                     "services": self.fingerprint.services,
                     "has_ssh": self.fingerprint.has_ssh,
                     "has_http": self.fingerprint.has_http,
-                    "has_agent": self.fingerprint.has_agent,
-                    "agent_version": self.fingerprint.agent_version,
+                    "has_agentwerk_agent": self.fingerprint.has_agentwerk_agent,
+                    "agentwerk_agent_version": self.fingerprint.agentwerk_agent_version,
                     "response_time_ms": self.fingerprint.response_time_ms,
                 }
                 if self.fingerprint
@@ -380,7 +380,7 @@ class NetworkDiscoveryEngine:
                                 has_http=any(
                                     p.port in (80, 443, 8000, 8080) and p.open for p in open_ports
                                 ),
-                                has_agent=any(
+                                has_agentwerk_agent=any(
                                     p.port == AGENTWERK_AGENT_PORT and p.open for p in open_ports
                                 ),
                                 probed_at=datetime.now(timezone.utc),

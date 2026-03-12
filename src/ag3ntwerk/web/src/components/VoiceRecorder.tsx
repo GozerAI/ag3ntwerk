@@ -239,8 +239,8 @@ export default function VoiceRecorder({
               state === 'recording'
                 ? 'bg-red-600 hover:bg-red-700'
                 : state === 'processing'
-                ? 'bg-aw-card cursor-wait'
-                : 'bg-aw-accent hover:bg-aw-accent/80'
+                ? 'bg-csuite-card cursor-wait'
+                : 'bg-csuite-accent hover:bg-csuite-accent/80'
             }
             ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
           `}
@@ -269,7 +269,7 @@ export default function VoiceRecorder({
         {state === 'recording' && (
           <div className="flex items-center gap-2">
             <Volume2 className="w-4 h-4 text-gray-400" />
-            <div className="w-24 h-2 bg-aw-card rounded-full overflow-hidden">
+            <div className="w-24 h-2 bg-csuite-card rounded-full overflow-hidden">
               <div
                 className="h-full bg-green-500 transition-all duration-75"
                 style={{ width: `${audioLevel * 100}%` }}
