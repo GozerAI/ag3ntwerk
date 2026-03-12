@@ -1,24 +1,21 @@
 # ag3ntwerk
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
+
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://python.org)
+[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
 
-Hierarchical AI Agent Orchestration Platform. A multi-agent system with 16 specialized agents coordinated by a central routing layer.
+AI agent framework and orchestration toolkit. Build, coordinate, and deploy hierarchical multi-agent systems with 16 specialized agents managed by a central routing layer.
 
-## Architecture
+Part of the [GozerAI](https://gozerai.com) ecosystem.
 
-```
-                    ┌──────────────────┐
-                    │    Overwatch      │  ← Central coordinator
-                    │  (routing/health) │
-                    └────────┬─────────┘
-                             │
-        ┌────────┬───────┬───┴───┬────────┬────────┐
-        │        │       │       │        │        │
-   ┌────▼──┐ ┌──▼───┐ ┌─▼──┐ ┌──▼──┐ ┌───▼──┐ ┌──▼───┐
-   │ Forge │ │Sentinel│ │Echo│ │Index│ │Citadel│ │ ...  │
-   │(tech) │ │(infra)│ │(mkt)│ │(data)│ │(sec) │ │10more│
-   └───────┘ └───────┘ └────┘ └─────┘ └──────┘ └──────┘
-```
+## Features
+
+- **16 specialized agents** covering technology, finance, marketing, security, data, and more
+- **Hierarchical orchestration** with central task routing and health monitoring
+- **REST API** with JWT and API key authentication
+- **MCP server** for tool integration with LLM clients
+- **Workflow engine** with automation pipelines
+- **Learning system** with agent improvement over time
+- **Web dashboard** for monitoring and management
 
 ## Agents
 
@@ -39,112 +36,104 @@ Hierarchical AI Agent Orchestration Platform. A multi-agent system with 16 speci
 | **Aegis** | Risk | Risk assessment, BCP/DR |
 | **Accord** | Compliance | Regulatory, audit, governance |
 | **Compass** | Strategy | Strategic planning, market analysis |
-| **Nexus** | Ops (legacy) | Deprecated alias for Overwatch |
 
-## Installation
+## Quick Start
 
 ```bash
+git clone https://github.com/GozerAI/ag3ntwerk.git
+cd ag3ntwerk
 pip install -e .
 
 # With distributed support (Redis)
 pip install -e ".[distributed]"
 
-# With dev tools
-pip install -e ".[dev]"
-```
-
-## Quick Start
-
-```python
-import asyncio
-from ag3ntwerk.agents import Overwatch, Forge, Sentinel
-from ag3ntwerk.core.base import Task
-
-async def main():
-    cos = Overwatch()
-    cos.register_subordinate(Forge())
-    cos.register_subordinate(Sentinel())
-
-    task = Task(
-        description="Review auth module security",
-        task_type="security_scan",
-    )
-    result = await cos.execute(task)
-    print(result.output)
-
-asyncio.run(main())
+# Start the API server
+uvicorn ag3ntwerk.api.app:app --host 0.0.0.0 --port 8000
 ```
 
 ## Configuration
 
-Edit `config/settings.yaml`:
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `AGENTWERK_AUTH_REQUIRED` | `true` | Enable/disable API authentication |
+| `AGENTWERK_API_KEY` | — | API key for `X-API-Key` header auth |
+| `AGENTWERK_JWT_SECRET` | — | JWT signing secret |
+| `AGENTWERK_LLM_PROVIDER` | `ollama` | LLM backend (`ollama`, `openai`, `gpt4all`) |
+| `OLLAMA_HOST` | `http://localhost:11434` | Ollama endpoint |
+| `OLLAMA_MODEL` | — | Default model for agent reasoning |
 
-```yaml
-llm:
-  provider: ollama
-  ollama:
-    base_url: "http://localhost:11434"
-    default_model: null
+## API Reference
 
-agents:
-  overwatch:
-    enabled: true
-  forge:
-    enabled: true
-  sentinel:
-    enabled: true
-```
+Authentication: `X-API-Key: <key>` or `Authorization: Bearer <jwt_token>`. Auth is enabled by default.
 
-## CLI
+### Tasks & Workflows
 
-```bash
-ag3ntwerk status          # Show agent status
-ag3ntwerk ask "question"  # Ask a question
-ag3ntwerk --help          # Full command list
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/tasks` | Submit a task for agent processing |
+| GET | `/api/v1/tasks/:id` | Get task status and result |
+| POST | `/api/v1/workflows` | Create a workflow |
+| GET | `/api/v1/workflows` | List workflows |
+| POST | `/api/v1/workflows/:id/run` | Execute a workflow |
 
-## API
+### Agents & Fleet
 
-```bash
-uvicorn ag3ntwerk.api.app:app --port 3737
-# GET /health
-# POST /api/v1/tasks
-# GET /api/v1/agents
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/agents` | List all agents |
+| GET | `/api/v1/agents/:name` | Get agent details |
+| GET | `/api/v1/fleet` | Fleet status overview |
+| GET | `/api/v1/fleet/health` | Agent health checks |
 
-## Deployment Modes
+### Dashboard & Metrics
 
-- **Local** (default): All agents in one process
-- **Distributed**: Redis-based inter-agent communication
-- **Hybrid**: Control plane centralized, specialist agents deployed separately
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/dashboard` | Dashboard summary |
+| GET | `/api/v1/metrics` | System metrics |
+| GET | `/api/v1/learning/progress` | Agent learning progress |
 
-## Project Structure
+### Conversations
 
-```
-src/ag3ntwerk/
-├── core/           # Base classes, config, errors
-├── agents/         # 16 agent implementations
-├── orchestration/  # Workflows, registry, routing
-├── learning/       # Pattern learning, experiments
-├── api/            # FastAPI REST API
-├── mcp/            # Model Context Protocol server
-├── modules/        # Pluggable modules (commerce, trends, etc.)
-├── gui/            # Desktop dashboard (PySide6)
-└── integrations/   # External service bridges
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/v1/chat` | Chat with an agent |
+| GET | `/api/v1/conversations` | List conversations |
 
-## Testing
+## MCP Server
+
+ag3ntwerk includes an MCP (Model Context Protocol) server for integration with LLM clients:
 
 ```bash
-pytest tests/unit/ -q    # ~3700 unit tests
-pytest tests/ -q         # Full suite
+# Start the MCP server
+python -m ag3ntwerk.mcp.server
 ```
+
+The MCP server exposes agent capabilities as tools, allowing LLM clients to dispatch tasks, run workflows, and query agent status.
+
+## Usage Example
+
+```python
+from ag3ntwerk.core import AgentOrchestrator
+
+orchestrator = AgentOrchestrator()
+
+# Route a task to the best agent
+result = await orchestrator.execute_task(
+    "Analyze our Q1 revenue trends and identify growth opportunities"
+)
+print(result.agent)   # "Vector" or "Keystone"
+print(result.output)
+```
+
+## Docker
+
+```bash
+docker compose up -d
+```
+
+See `docker-compose.yml` for the full stack configuration.
 
 ## License
 
-This project is dual-licensed:
-
-- **[AGPL-3.0](LICENSE)** for open-source use
-- **[Commercial License](COMMERCIAL-LICENSE.md)** for proprietary use
-
-See [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md) for details.
+AGPL-3.0 — see [LICENSE](LICENSE) for details. Commercial licenses available at [gozerai.com](https://gozerai.com).
