@@ -12,6 +12,7 @@ import Activity from './pages/Activity'
 import Workflows from './pages/Workflows'
 import Interviews from './pages/Interviews'
 import ContentPipeline from './pages/ContentPipeline'
+import Meetings from './pages/Meetings'
 
 function NotFound() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="workflows" element={<Workflows />} />
           <Route path="interviews" element={<Interviews />} />
           <Route path="content" element={<ContentPipeline />} />
+          <Route path="meetings" element={<Meetings />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

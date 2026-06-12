@@ -62,6 +62,28 @@ interface WSMessage {
   timestamp: string
 }
 
+interface MeetingListItem {
+  id: string
+  title: string
+  status: string
+  duration_seconds: number | null
+  source: string
+  action_item_count: number
+  created_at: string
+}
+
+interface ActionItemEntry {
+  id: string
+  meeting_id: string
+  description: string
+  assignee: string | null
+  deadline: string | null
+  status: string
+  priority: string
+  notes: string
+  created_at: string
+}
+
 interface Store {
   // Connection state
   connected: boolean
@@ -73,6 +95,8 @@ interface Store {
   cooStatus: COOStatus | null
   dashboardStats: DashboardStats | null
   goals: Goal[]
+  meetings: MeetingListItem[]
+  actionItems: ActionItemEntry[]
 
   // Activity feed
   activities: WSMessage[]
@@ -87,6 +111,9 @@ interface Store {
   fetchExecutives: () => Promise<void>
   fetchCOOStatus: () => Promise<void>
   fetchGoals: () => Promise<void>
+  fetchMeetings: () => Promise<void>
+  fetchActionItems: (filters?: { status?: string; assignee?: string; meeting_id?: string }) => Promise<void>
+  updateActionItem: (itemId: string, updates: { status?: string; notes?: string }) => Promise<boolean>
 
   // Task actions
   createTask: (task: { description: string; task_type?: string; priority?: string }) => Promise<Task | null>
@@ -124,6 +151,8 @@ export const useStore = create<Store>((set, get) => ({
   cooStatus: null,
   dashboardStats: null,
   goals: [],
+  meetings: [],
+  actionItems: [],
   activities: [],
 
   connect: () => {
@@ -505,6 +534,53 @@ export const useStore = create<Store>((set, get) => ({
       }
     } catch (e) {
       console.error('Failed to delete conversation:', e)
+    }
+    return false
+  },
+
+  fetchMeetings: async () => {
+    try {
+      const res = await fetch(`${API_BASE}/meetings`)
+      if (res.ok) {
+        const data = await res.json()
+        set({ meetings: data.meetings || [] })
+      }
+    } catch (e) {
+      console.error('Failed to fetch meetings:', e)
+    }
+  },
+
+  fetchActionItems: async (filters) => {
+    try {
+      const params = new URLSearchParams()
+      if (filters?.status) params.set('status', filters.status)
+      if (filters?.assignee) params.set('assignee', filters.assignee)
+      if (filters?.meeting_id) params.set('meeting_id', filters.meeting_id)
+      const qs = params.toString() ? `?${params.toString()}` : ''
+      const res = await fetch(`${API_BASE}/meetings/action-items${qs}`)
+      if (res.ok) {
+        const data = await res.json()
+        set({ actionItems: data.action_items || [] })
+      }
+    } catch (e) {
+      console.error('Failed to fetch action items:', e)
+    }
+  },
+
+  updateActionItem: async (itemId, updates) => {
+    try {
+      const res = await fetch(`${API_BASE}/meetings/action-items/${itemId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates),
+      })
+      if (res.ok) {
+        get().fetchActionItems()
+        get().fetchMeetings()
+        return true
+      }
+    } catch (e) {
+      console.error('Failed to update action item:', e)
     }
     return false
   },

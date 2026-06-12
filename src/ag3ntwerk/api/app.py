@@ -120,6 +120,7 @@ from ag3ntwerk.api.fleet_routes import fleet_router
 from ag3ntwerk.api.swarm_routes import swarm_router
 from ag3ntwerk.api.learning_routes import router as learning_router
 from ag3ntwerk.api.metacognition_routes import router as metacognition_router
+from ag3ntwerk.api.meeting_routes import router as meetings_router
 
 
 # ============================================================
@@ -596,6 +597,7 @@ app.include_router(fleet_router)
 app.include_router(learning_router)
 app.include_router(metacognition_router)
 app.include_router(swarm_router)
+app.include_router(meetings_router)
 
 
 # ============================================================
