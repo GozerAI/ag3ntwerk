@@ -1,7 +1,6 @@
 # ag3ntwerk
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://python.org)
-[![License: AGPL-3.0](https://img.shields.io/badge/License-AGPL--3.0-blue.svg)](LICENSE)
+[![GozerAI](https://img.shields.io/badge/GozerAI-ecosystem-5eead4?style=flat-square&labelColor=0b0e14)](https://github.com/GozerAI) [![License](https://img.shields.io/badge/license-AGPL--3.0-3b82f6?style=flat-square)](LICENSE) [![Python](https://img.shields.io/badge/python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org) [![Pro & Enterprise](https://img.shields.io/badge/Pro%20%26%20Enterprise-gozerai.com-fbbf24?style=flat-square)](https://gozerai.com/pricing)
 
 AI agent framework and orchestration toolkit. Build, coordinate, and deploy hierarchical multi-agent systems with 16 specialized agents managed by a central routing layer.
 
